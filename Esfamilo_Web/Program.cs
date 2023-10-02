@@ -22,6 +22,12 @@ namespace Esfamilo_Web
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                // Default Lockout settings.
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            });
             builder.Services.AddDependencyInjection();
             builder.Services.AddRazorPages();
             var app = builder.Build();

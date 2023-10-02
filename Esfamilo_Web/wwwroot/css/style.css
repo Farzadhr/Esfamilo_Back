@@ -32,3 +32,6 @@ input:focus , input:focus-within ,input:focus-visible   {
     border-color: var(--pink);
     outline: none;
 }
+.text-danger{
+    color:red;
+}
