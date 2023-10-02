@@ -1,0 +1,34 @@
+@font-face {
+    font-family: Samim;
+    src: url(../font/Samim-FD.eot),url(../font/Samim-FD.ttf),url(../font/Samim-FD.woff),url(../font/Samim-FD.woff2);
+}
+*{
+    font-family: Samim;
+}
+html{
+    margin: 0!important;
+    padding: 0 !important;
+    height:100vh;
+}
+.Page{
+    height:100%;
+}
+body{
+    margin: 0;
+}
+body > div{
+    height:100%;
+    width:100%;
+}
+p{
+    margin: 0;
+    padding: 0;
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+input:focus , input:focus-within ,input:focus-visible   {
+    border-color: var(--pink);
+    outline: none;
+}

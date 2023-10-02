@@ -16,7 +16,7 @@ namespace Esfamilo_Web.Pages
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToPage("Login");
+                //return RedirectToPage("/LoginToGame");
             }
             return Page();
         }

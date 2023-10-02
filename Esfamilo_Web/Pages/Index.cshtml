@@ -4,7 +4,402 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="DesktopDivContainer">
+    <div class="Page" id="Home" show>
+        <div class="container">
+            <div class="navbarContainer">
+                <div class="navbar">
+                    <img src="img/Logo/FullLogo-light.png" alt="EsFamilo Logo">
+                    <div class="profileNav">
+                        <div class="profileImg"></div>
+                        <div class="profileDetail">
+                            <p class="profileUsername">نام کاربری</p>
+                            <p class="profileScore">9861<i class="starScore fa-solid fa-star"></i></p>
+                        </div>
+                    </div>
+                    <div class="menuNav">
+                        <button class="menuBtn"><i class="fa-solid fa-user-group"></i></button>
+                        <button class="menuBtn selected"><i class="fa-solid fa-house"></i></button>
+                        <button class="menuBtn"><i class="fa-solid fa-user"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="manageLobby">
+                    <div class="joinLobby">
+                        <button>پیوستن به لابی</button>
+                    </div>
+                    <div class="createLobby">
+                        <button>ساخت لابی</button>
+                    </div>
+                    <div class="ruleAndHint">
+
+                        <button class="hint">
+                            <i class="fa-solid fa-book-open"></i>راهنما
+                        </button>
+
+                        <button class="rule">
+                            <i class="fa-solid fa-list-check"></i>قوانین
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="chat">
+                <div class="messages">
+                    <ul class="messageUl">
+                        <li class="spaceli"></li>
+                        <li class="otherMessage">
+                            <div class="message">
+                                <p class="messageText">سلام خیته نباشید</p>
+                                <p class="messagesProfile">farzadflr</p>
+                            </div>
+                        </li>
+                        <li class="userMessage">
+                            <div class="message">
+                                <p class="messageText">سلام خیته نباشید</p>
+                                <p class="messagesProfile">farzadflr</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="sendMessage">
+                    <form id="sendMessageForm">
+                        <textarea name="" id=""></textarea>
+                        <input type="submit" value="ارسال پیام">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="Page" id="ProfilePage">
+        <div class="container">
+            <div class="navbarContainer">
+                <div class="navbar">
+                    <img src="img/Logo/FullLogo-light.png" alt="EsFamilo Logo">
+
+                    <div class="menuNav">
+                        <button class="menuBtn"><i class="fa-solid fa-user-group"></i></button>
+                        <button class="menuBtn"><i class="fa-solid fa-house"></i></button>
+                        <button class="menuBtn selected"><i class="fa-solid fa-user"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="profile">
+                    <div class="profileImg"></div>
+                    <div class="profileDetail">
+                        <p class="profileUsername">نام کاربری</p>
+                        <p class="profileScore">9861<i class="starScore fa-solid fa-star"></i></p>
+                    </div>
+                    <div class="profileHandle">
+                        <button class="profileHandleBtn profileHandleBtnWin">
+                            <p>تعداد برد:</p>
+                            <p>123</p>
+                        </button>
+                        <button class="profileHandleBtn">
+                            ویرایش پروفایل
+                        </button>
+                        <button class="profileHandleBtn">
+                            خروج از حساب کاربری
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="chat">
+                <div class="messages">
+                    <div class="warningMessage">
+                        <h4>لطفا برای ارسال پیام وارد یک لابی شوید</h4>
+                    </div>
+                </div>
+                <div class="sendMessage">
+                    <form id="sendMessageForm">
+                        <textarea name="" id=""></textarea>
+                        <input type="submit" value="ارسال پیام">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Page" id="CreateLobby">
+        <div class="container">
+            <div class="navbarContainer">
+                <div class="navbar">
+                    <img src="img/Logo/FullLogo-light.png" alt="EsFamilo Logo">
+                    <div class="profileNav">
+                        <div class="profileImg"></div>
+                        <div class="profileDetail">
+                            <p class="profileUsername">نام کاربری</p>
+                            <p class="profileScore">9861<i class="starScore fa-solid fa-star"></i></p>
+                        </div>
+                    </div>
+                    <div class="menuNav">
+                        <button class="menuBtn"><i class="fa-solid fa-close"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <form action="" id="CreateLobbyForm">
+                    <input type="text" name="LobbyName" class="lobbyName" placeholder="نام لابی را وارد کنید">
+                    <div class="lobbyDetail">
+                        <div class="privateLobby">
+                            <div class="divCheck"><i class="fa-solid fa-check"></i></div>
+                            <p>لابی اختصاصی</p>
+                        </div>
+                        <div class="roundCount">
+                            <input type="number" name="roundCount" min="1" max="8" value="1">
+                            <label for="">تعداد دور</label>
+                        </div>
+                    </div>
+                    <div class="lobbyCategory">
+                        <h3>انتخاب دسته</h3>
+                        <div class="lobbyCategoryContainer">
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">اسم <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">فامیل <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">شهر <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">کشور <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">رنگ <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">میوه <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">ماشین <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">حیوان <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">اشیا <i class="fa fa-check"></i></div>
+                            </div>
+                            <div class="category">
+                                <div class="categoryBtn categoryChecked">غذا <i class="fa fa-check"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" value="ساخت لابی" class="createLobbySubmit">
+                </form>
+            </div>
+            <div class="chat">
+                <div class="messages">
+                    <div class="warningMessage">
+                        <h4>لطفا برای ارسال پیام وارد یک لابی شوید</h4>
+                    </div>
+                </div>
+                <div class="sendMessage">
+                    <form id="sendMessageForm">
+                        <textarea name="" id=""></textarea>
+                        <input type="submit" value="ارسال پیام">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Page" id="Lobbies">
+        <div class="container">
+            <div class="navbarContainer">
+                <div class="navbar">
+                    <img src="img/Logo/FullLogo-light.png" alt="EsFamilo Logo">
+                    <div class="profileNav">
+                        <div class="profileImg"></div>
+                        <div class="profileDetail">
+                            <p class="profileUsername">نام کاربری</p>
+                            <p class="profileScore">9861<i class="starScore fa-solid fa-star"></i></p>
+                        </div>
+                    </div>
+                    <div class="menuNav">
+                        <button class="menuBtn"><i class="fa-solid fa-close"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <ul class="listLobby">
+                    <li>
+                        <div class="listLobbyDetail">
+                            <p class="listLobbyName">تهران</p>
+                            <p class="listLobbyUser">8/2 <i class="fa fa-eye"></i></p>
+                        </div>
+                        <div class="listLobbyOpen"><i class="fa fa-door-open"></i></div>
+                    </li>
+                </ul>
+                <div class="createLobbyInList">
+                    <button class="createLobbyInListBtn">ساخت لابی جدید</button>
+                </div>
+
+            </div>
+            <div class="chat">
+                <div class="messages">
+                    <div class="warningMessage">
+                        <h4>لطفا برای ارسال پیام وارد یک لابی شوید</h4>
+                    </div>
+                </div>
+                <div class="sendMessage">
+                    <form id="sendMessageForm">
+                        <textarea name="" id=""></textarea>
+                        <input type="submit" value="ارسال پیام">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<div id="MobileDivContainer">
+    <div class="Page" id="Home" show>
+        <div class="header">
+            <p class="score">9861<i class="starScore fa-solid fa-star"></i></p>
+            <div class="headerlogo">
+                <img src="img/Logo/FullLogo-light.png" alt="logo">
+            </div>
+            <p class="userNameHeader">نام کاربری</p>
+        </div>
+        <div class="main">
+            <div class="JoinTheLobby">
+                <button>
+                    پیوستن به لابی
+                </button>
+            </div>
+
+            <div class="createLobby">
+                <button>
+                    ساخت لابی
+                </button>
+            </div>
+            <div class="ruleAndHint">
+
+                <button class="hint">
+                    <i class="fa-solid fa-book-open"></i>راهنما
+                </button>
+
+                <button class="rule">
+                    <i class="fa-solid fa-list-check"></i>قوانین
+                </button>
+            </div>
+        </div>
+        <div class="footer">
+            <button class="menuBtn"><i class="fa-solid fa-user-group"></i></button>
+            <button class="menuBtn selected"><i class="fa-solid fa-house"></i></button>
+            <button class="menuBtn"><i class="fa-solid fa-user"></i></button>
+        </div>
+    </div>
+    <div class="Page" id="ProfilePage">
+        <div class="header">
+            <!-- <p class="score">9861<i class="starScore fa-solid fa-star"></i></p> -->
+            <div class="headerlogo">
+                <img src="img/Logo/FullLogo-light.png" alt="logo">
+            </div>
+
+            <!-- <p class="userNameHeader">نام کاربری</p> -->
+        </div>
+        <div class="main">
+            <div class="profile">
+                <div class="profileImg"></div>
+                <div class="profileDetail">
+                    <p class="profileUsername">نام کاربری</p>
+                    <p class="profileScore">9861<i class="starScore fa-solid fa-star"></i></p>
+                </div>
+                <div class="profileHandle">
+                    <button class="profileHandleBtn profileHandleBtnWin">
+                        <p>تعداد برد:</p>
+                        <p>123</p>
+                    </button>
+                    <button class="profileHandleBtn">
+                        ویرایش پروفایل
+                    </button>
+                    <button class="profileHandleBtn">
+                        خروج از حساب کاربری
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <button class="menuBtn"><i class="fa-solid fa-user-group"></i></button>
+            <button class="menuBtn"><i class="fa-solid fa-house"></i></button>
+            <button class="menuBtn selected"><i class="fa-solid fa-user"></i></button>
+        </div>
+    </div>
+    <div class="Page" id="CreateLobby">
+        <div class="header">
+            <p class="score" id="ClosePage"><i class="starScore fa-solid fa-x"></i></p>
+            <div class="headerlogo">
+                <img src="img/Logo/FullLogo-light.png" alt="logo">
+            </div>
+            <p class="userNameHeader">نام کاربری</p>
+        </div>
+        <div class="main">
+            <form action="" id="CreateLobbyForm">
+                <input type="text" name="LobbyName" class="lobbyName" placeholder="نام لابی را وارد کنید">
+                <div class="lobbyDetail">
+                    <div class="privateLobby">
+                        <div class="divCheck"><i class="fa-solid fa-check"></i></div>
+                        <p>لابی اختصاصی</p>
+                    </div>
+                    <div class="roundCount">
+                        <input type="number" name="roundCount" min="1" max="8" value="1">
+                        <label for="">تعداد دور</label>
+                    </div>
+                </div>
+                <div class="lobbyCategory">
+                    <h3>انتخاب دسته</h3>
+                    <div class="lobbyCategoryContainer">
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">اسم <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">فامیل <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">شهر <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">کشور <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">رنگ <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">میوه <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">ماشین <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">حیوان <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">اشیا <i class="fa fa-check"></i></div>
+                        </div>
+                        <div class="category">
+                            <div class="categoryBtn categoryChecked">غذا <i class="fa fa-check"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" value="ساخت لابی" class="createLobbySubmit">
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var pages = document.getElementsByClassName("Page")
+        for (var i of pages) {
+            i.style.display = "none"
+        }
+        if (window.innerWidth > 760) {
+            document.getElementById("MobileDivContainer").remove();
+            document.querySelector(".Page[show]").style.display = "block"
+        } else {
+            document.getElementById("DesktopDivContainer").remove();
+            document.querySelector(".Page[show]").style.display = "flex"
+        }
+    </script>
+}

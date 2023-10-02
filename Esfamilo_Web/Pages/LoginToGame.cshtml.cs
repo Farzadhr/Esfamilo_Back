@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Esfamilo_Web.Pages
 {
-    public class LoginModel : PageModel
+    public class LoginToGameModel : PageModel
     {
         public void OnGet()
         {
