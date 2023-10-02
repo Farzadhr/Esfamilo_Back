@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Esfamilo_Web.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Esfamilo_Web.Data
@@ -9,5 +10,6 @@ namespace Esfamilo_Web.Data
             : base(options)
         {
         }
+        public DbSet<ApplicationUser> AppUser { get; set; }
     }
 }
