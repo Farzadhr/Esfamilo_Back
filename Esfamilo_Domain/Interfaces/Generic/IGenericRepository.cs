@@ -11,7 +11,8 @@ namespace Esfamilo_Domain.Interfaces.Generic
         Task<T> Add(T entity);
         Task Update(T entity);
         Task Delete(T entity);
-        Task<T> Get(T entity);
+        Task Delete(int Id);
+        Task<T> Get(int Id);
         Task<IEnumerable<T>> GetAll();
 
     }

@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Esfamilo_Domain\Esfamilo_Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="Microsoft.EntityFrameworkCore" />
+  </ItemGroup>
+
 </Project>
