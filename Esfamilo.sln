@@ -13,15 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IOC", "IOC", "{5476FC8F-664
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{B36735B9-0E48-4720-BCF6-2052106C7163}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esfamilo_Core", "Esfamilo_Core\Esfamilo_Core.csproj", "{CD1B5CFB-D492-4FBF-9E98-7AB00C8FE029}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esfamilo_Core", "Esfamilo_Core\Esfamilo_Core.csproj", "{CD1B5CFB-D492-4FBF-9E98-7AB00C8FE029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esfamilo_Data", "Esfamilo_Data\Esfamilo_Data.csproj", "{60F5CDA8-9F62-423B-8F8A-1DBDF8E06188}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esfamilo_Data", "Esfamilo_Data\Esfamilo_Data.csproj", "{60F5CDA8-9F62-423B-8F8A-1DBDF8E06188}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esfamilo_Domain", "Esfamilo_Domain\Esfamilo_Domain.csproj", "{8A93A3C5-F0BC-491F-B230-B8FE3C0372F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esfamilo_Domain", "Esfamilo_Domain\Esfamilo_Domain.csproj", "{8A93A3C5-F0BC-491F-B230-B8FE3C0372F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esfamilo_IOC", "Esfamilo_IOC\Esfamilo_IOC.csproj", "{61FE32F8-AF61-47B1-98CC-DF012A68293F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esfamilo_IOC", "Esfamilo_IOC\Esfamilo_IOC.csproj", "{61FE32F8-AF61-47B1-98CC-DF012A68293F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Esfamilo_Web", "Esfamilo_Web\Esfamilo_Web.csproj", "{792705AF-8412-46A6-9719-0120B69C9AD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Esfamilo_Web", "Esfamilo_Web\Esfamilo_Web.csproj", "{792705AF-8412-46A6-9719-0120B69C9AD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
