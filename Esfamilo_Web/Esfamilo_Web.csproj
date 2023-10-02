@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Esfamilo_Core\Esfamilo_Core.csproj" />
     <ProjectReference Include="..\Esfamilo_Data\Esfamilo_Data.csproj" />
+    <ProjectReference Include="..\Esfamilo_IOC\Esfamilo_IOC.csproj" />
   </ItemGroup>
 
 </Project>

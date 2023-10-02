@@ -1,4 +1,5 @@
 using Esfamilo_Data.Context;
+using Esfamilo_IOC;
 using Esfamilo_Web.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ namespace Esfamilo_Web
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddRazorPages();
-
+            builder.Services.AddDependencyInjection();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
