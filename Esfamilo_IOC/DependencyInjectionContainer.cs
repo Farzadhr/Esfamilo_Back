@@ -21,6 +21,7 @@ namespace Esfamilo_IOC
             service.AddScoped<ILobbyService, LobbyService>();
             service.AddScoped<IUserInLobbyService, UserInLobbyService>();
             service.AddScoped<IWordForCategoryService, WordForCategoryService>();
+            service.AddScoped<ICategoryInLobbyService, CategoryInLobbyService>();
 
             //add Domain and Data layer repository
             service.AddScoped<ICategroyRepository,CategroyRepository>();
@@ -28,6 +29,7 @@ namespace Esfamilo_IOC
             service.AddScoped<ILobbyRepository,LobbyRepository>();
             service.AddScoped<IUserInLobbyRepository, UserInLobbyRepository>();
             service.AddScoped<IWordForCategoryRepository, WordForCategoryRepository>();
+            service.AddScoped<ICategoryInLobbyRepository, CategoryInLobbyRepository>();
         }
     }
 }
