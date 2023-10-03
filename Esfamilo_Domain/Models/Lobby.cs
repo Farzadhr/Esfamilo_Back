@@ -16,5 +16,6 @@ namespace Esfamilo_Domain.Models
         public int CurrentRound { get; set; }
         public virtual List<UserInLobby> UserInLobbies { get; set; }
         public virtual List<WordForCategory> WordForCategories { get; set; }
+        public virtual List<CategoryInLobby> CategoryInLobbies { get; set; }
     }
 }

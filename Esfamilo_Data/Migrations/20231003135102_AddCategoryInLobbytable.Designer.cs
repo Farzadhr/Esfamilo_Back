@@ -3,6 +3,7 @@ using Esfamilo_Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Esfamilo_Data.Migrations
 {
     [DbContext(typeof(EsfamiloDbContext))]
-    partial class EsfamiloDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231003135102_AddCategoryInLobbytable")]
+    partial class AddCategoryInLobbytable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
