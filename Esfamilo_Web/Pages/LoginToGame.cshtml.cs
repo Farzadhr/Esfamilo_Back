@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+using Esfamilo_Web.Models;
 
 namespace Esfamilo_Web.Pages
 {
@@ -54,9 +55,15 @@ namespace Esfamilo_Web.Pages
             var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
-                var user = CreateUser();
+                var userc = CreateUser();
+                ApplicationUser user = new ApplicationUser
+                {
+                    Score = 100,
+                    UserName = Input.UserName,
+                };
 
-                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+                //await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
+                //user.Score = 100;
                 var resultsign = await _userManager.CreateAsync(user, Input.Password);
                 if (resultsign.Succeeded)
                 {
@@ -74,7 +81,6 @@ namespace Esfamilo_Web.Pages
             {
                 return RedirectToPage("/Index");
             }
-            return Page();
         }
         private IUserEmailStore<IdentityUser> GetEmailStore()
         {

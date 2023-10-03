@@ -29,6 +29,7 @@ namespace Esfamilo_Web
                 options.Password.RequireUppercase = false;
             });
             builder.Services.AddDependencyInjection();
+            builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             builder.Services.AddRazorPages();
             var app = builder.Build();
 

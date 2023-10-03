@@ -6,7 +6,8 @@ namespace Esfamilo_Web.Models
     {
         public float? Score { get; set; }
         public string? FullName { get; set; }
-        public string? Gender { get; set; }
+        public string? ImgProfileUrl { get; set; }
+        public int Win { get; set; }
         public override string Email { get => base.Email; set => base.Email = value; }
     }
 }

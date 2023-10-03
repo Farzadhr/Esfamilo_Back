@@ -11,16 +11,16 @@
                 <div class="navbar">
                     <img src="img/Logo/FullLogo-light.png" alt="EsFamilo Logo">
                     <div class="profileNav">
-                        <div class="profileImg"></div>
+                        <div class="profileImg" style="background-image:url(img/User-Profile-PNG-Image.png);background-size: cover;"></div>
                         <div class="profileDetail">
-                            <p class="profileUsername">نام کاربری</p>
-                            <p class="profileScore">9861<i class="starScore fa-solid fa-star"></i></p>
+                            <p class="profileUsername">@Model.CurrentUser.UserName</p>
+                            <p class="profileScore">@Model.CurrentUser.Score<i class="starScore fa-solid fa-star"></i></p>
                         </div>
                     </div>
                     <div class="menuNav">
                         <button class="menuBtn"><i class="fa-solid fa-user-group"></i></button>
                         <button class="menuBtn selected"><i class="fa-solid fa-house"></i></button>
-                        <button class="menuBtn"><i class="fa-solid fa-user"></i></button>
+                        <button class="menuBtn" id="OpenProfileBtn"><i class="fa-solid fa-user"></i></button>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                         <button>پیوستن به لابی</button>
                     </div>
                     <div class="createLobby">
-                        <button>ساخت لابی</button>
+                        <button id="OpenCreateLobbyPage">ساخت لابی</button>
                     </div>
                     <div class="ruleAndHint">
 
@@ -47,21 +47,9 @@
             </div>
             <div class="chat">
                 <div class="messages">
-                    <ul class="messageUl">
-                        <li class="spaceli"></li>
-                        <li class="otherMessage">
-                            <div class="message">
-                                <p class="messageText">سلام خیته نباشید</p>
-                                <p class="messagesProfile">farzadflr</p>
-                            </div>
-                        </li>
-                        <li class="userMessage">
-                            <div class="message">
-                                <p class="messageText">سلام خیته نباشید</p>
-                                <p class="messagesProfile">farzadflr</p>
-                            </div>
-                        </li>
-                    </ul>
+                    <div class="warningMessage">
+                        <h4>لطفا برای ارسال پیام وارد یک لابی شوید</h4>
+                    </div>
                 </div>
                 <div class="sendMessage">
                     <form id="sendMessageForm">
@@ -81,29 +69,31 @@
 
                     <div class="menuNav">
                         <button class="menuBtn"><i class="fa-solid fa-user-group"></i></button>
-                        <button class="menuBtn"><i class="fa-solid fa-house"></i></button>
+                        <button class="menuBtn" id="OpenHomeBtnInProfile"><i class="fa-solid fa-house"></i></button>
                         <button class="menuBtn selected"><i class="fa-solid fa-user"></i></button>
                     </div>
                 </div>
             </div>
             <div class="main">
                 <div class="profile">
-                    <div class="profileImg"></div>
+                    <div class="profileImg" style="background-image:url(img/User-Profile-PNG-Image.png);background-size: cover;"></div>
                     <div class="profileDetail">
-                        <p class="profileUsername">نام کاربری</p>
-                        <p class="profileScore">9861<i class="starScore fa-solid fa-star"></i></p>
+                        <p class="profileUsername">@Model.CurrentUser.UserName</p>
+                        <p class="profileScore">@Model.CurrentUser.Score<i class="starScore fa-solid fa-star"></i></p>
                     </div>
                     <div class="profileHandle">
                         <button class="profileHandleBtn profileHandleBtnWin">
                             <p>تعداد برد:</p>
-                            <p>123</p>
+                            <p>@Model.CurrentUser.Win</p>
                         </button>
-                        <button class="profileHandleBtn">
+                        <button class="profileHandleBtn" id="BtnOpenUpdataProfileFromProfile">
                             ویرایش پروفایل
                         </button>
-                        <button class="profileHandleBtn">
-                            خروج از حساب کاربری
-                        </button>
+                        <form asp-page-handler="SignOutUserForm" style="width:50%">
+                            <button class="profileHandleBtn" style="width:100%">
+                                خروج از حساب کاربری
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -135,7 +125,7 @@
                         </div>
                     </div>
                     <div class="menuNav">
-                        <button class="menuBtn"><i class="fa-solid fa-close"></i></button>
+                        <button class="menuBtn" id="CloseCreateLobbyPage"><i class="fa-solid fa-close"></i></button>
                     </div>
                 </div>
             </div>
@@ -251,6 +241,53 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="Page" id="UpdateProfile">
+        <div class="container">
+            <div class="navbarContainer">
+                <div class="navbar">
+                    <img src="img/Logo/FullLogo-light.png" alt="EsFamilo Logo">
+                    <div class="profileNav">
+                        <div class="profileImg" style="background-image:url(img/User-Profile-PNG-Image.png);background-size: cover;"></div>
+                        <div class="profileDetail">
+                            <p class="profileUsername">@Model.CurrentUser.UserName</p>
+                            <p class="profileScore">@Model.CurrentUser.Score<i class="starScore fa-solid fa-star"></i></p>
+                        </div>
+                    </div>
+                    <div class="menuNav">
+                        <button class="menuBtn" id="BtnCloseProfileFromProfile"><i class="fa-solid fa-close"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <form asp-page-handler="UpdateProfileForm" enctype="multipart/form-data" class="updateProfileForm">
+                    <input type="text" placeholder="نام و نام خانوادگی" name="FullName" value="@Model.CurrentUser.FullName">
+                    <input type="email" placeholder="ایمیل(برای فراموشی رمز)" name="Email" value="@Model.CurrentUser.Email">
+                    <p>عکس پروفایل</p>
+                    <input type="file" name="ProfileImgUpdateProfile">
+                    <div class="register">
+                        <button type="submit">
+                            ویرایش پروفایل کاربری
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="chat">
+                <div class="messages">
+                    <div class="warningMessage">
+                        <h4>لطفا برای ارسال پیام وارد یک لابی شوید</h4>
+                    </div>
+                </div>
+                <div class="sendMessage">
+                    <form id="sendMessageForm">
+                        <textarea name="" id=""></textarea>
+                        <input type="submit" value="ارسال پیام">
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <div id="MobileDivContainer">
@@ -389,17 +426,7 @@
     </div>
 </div>
 @section Scripts{
+    <script src="~/js/Paging.js"></script>
     <script>
-        var pages = document.getElementsByClassName("Page")
-        for (var i of pages) {
-            i.style.display = "none"
-        }
-        if (window.innerWidth > 760) {
-            document.getElementById("MobileDivContainer").remove();
-            document.querySelector(".Page[show]").style.display = "block"
-        } else {
-            document.getElementById("DesktopDivContainer").remove();
-            document.querySelector(".Page[show]").style.display = "flex"
-        }
     </script>
 }

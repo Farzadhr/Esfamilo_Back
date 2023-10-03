@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Esfamilo_IOC\Esfamilo_IOC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Profileimg\" />
+  </ItemGroup>
+
 </Project>
