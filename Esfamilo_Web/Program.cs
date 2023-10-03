@@ -1,6 +1,7 @@
 using Esfamilo_Data.Context;
 using Esfamilo_IOC;
 using Esfamilo_Web.Data;
+using Esfamilo_Web.Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,7 @@ namespace Esfamilo_Web
             builder.Services.AddDependencyInjection();
             builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             builder.Services.AddRazorPages();
+            builder.Services.AddSignalR();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -52,8 +54,8 @@ namespace Esfamilo_Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.MapRazorPages();
+            app.MapHub<ManageLobbyHub>("/ManageLobbyHub");
 
             app.Run();
         }

@@ -10,5 +10,6 @@ namespace Esfamilo_Core.Interfaces
 {
     public interface ICategoryService : IGenericService<Category>
     {
+        Task<Category> GetByCateName(string cateName);
     }
 }

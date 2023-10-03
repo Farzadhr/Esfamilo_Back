@@ -59,6 +59,15 @@ namespace Esfamilo_Core.Services
             return Entities;
         }
 
+        public async Task<Category> GetByCateName(string cateName)
+        {
+            var Entities = await _repository.GetAll();
+            var cate = Entities.FirstOrDefault(x=>x.CategroyName== cateName);
+            if (cate == null)
+                return null;
+            return cate;
+        }
+
         public async Task Update(Category entity)
         {
             await _repository.Update(entity);

@@ -130,15 +130,16 @@
                 </div>
             </div>
             <div class="main">
-                <form action="" id="CreateLobbyForm">
-                    <input type="text" name="LobbyName" class="lobbyName" placeholder="نام لابی را وارد کنید">
+                <form id="CreateLobbyForm">
+                    <input type="text" id="LobbyNameForm" class="lobbyName" placeholder="نام لابی را وارد کنید">
                     <div class="lobbyDetail">
                         <div class="privateLobby">
-                            <div class="divCheck"><i class="fa-solid fa-check"></i></div>
+                            <input type="checkbox" id="CheckPrivateLobby" style="display:none" />
+                            <div class="divCheck" id="BtnCheckPrivateLobby"><i class="fa-solid fa-check"></i></div>
                             <p>لابی اختصاصی</p>
                         </div>
                         <div class="roundCount">
-                            <input type="number" name="roundCount" min="1" max="8" value="1">
+                            <input type="number" id="roundCountLobby" min="1" max="8" value="1">
                             <label for="">تعداد دور</label>
                         </div>
                     </div>
@@ -146,34 +147,34 @@
                         <h3>انتخاب دسته</h3>
                         <div class="lobbyCategoryContainer">
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">اسم <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn categoryChecked" id="Names">اسم <i class="fa fa-check"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">فامیل <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn categoryChecked" id="Lnames">فامیل <i class="fa fa-check"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">شهر <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn" id="Cities">شهر <i class="fa fa-x"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">کشور <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn" id="Countries">کشور <i class="fa fa-check"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">رنگ <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn" id="Colors">رنگ <i class="fa fa-check"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">میوه <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn" id="Fruits">میوه <i class="fa fa-check"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">ماشین <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn" id="Cars">ماشین <i class="fa fa-check"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">حیوان <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn" id="Animals">حیوان <i class="fa fa-check"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">اشیا <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn" id="Objects">اشیا <i class="fa fa-check"></i></div>
                             </div>
                             <div class="category">
-                                <div class="categoryBtn categoryChecked">غذا <i class="fa fa-check"></i></div>
+                                <div class="categoryBtn" id="Foods">غذا <i class="fa fa-check"></i></div>
                             </div>
                         </div>
                     </div>
@@ -426,7 +427,64 @@
     </div>
 </div>
 @section Scripts{
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/Paging.js"></script>
+    <script src="~/js/ManageLobby.js"></script>
+
     <script>
+        $("#BtnCheckPrivateLobby").click(function (e) {
+            e.preventDefault();
+            if ($("#BtnCheckPrivateLobby").hasClass("divChecked")) {
+                $("#CheckPrivateLobby").attr("checked", false);
+                $("#BtnCheckPrivateLobby").removeClass("divChecked");
+            } else {
+                $("#CheckPrivateLobby").attr("checked", true);
+                $("#BtnCheckPrivateLobby").addClass("divChecked");
+            }
+        });
+        checkcategoryischeckofnot();
+        $(".categoryBtn").click(function (e) {
+            var isselected = $(this).hasClass("categoryChecked");
+            if (isselected == true) {
+                $(this).removeClass("categoryChecked");
+                checkcategoryischeckofnot();
+            } else {
+                $(this).addClass("categoryChecked");
+                checkcategoryischeckofnot();
+            }
+        })
+        $("#CreateLobbyForm").submit(function (e) {
+            e.preventDefault();
+            var categoryChecked = document.getElementsByClassName("categoryChecked");
+            var categorycheckedString = ""
+            var LobbyName = $("#LobbyNameForm").val();
+            var isPrivateLobby = ($("#CheckPrivateLobby").attr("checked") == "checked") ? true : false
+            var roundCount = $("#roundCountLobby").val();
+            for (var i of categoryChecked) {
+                categorycheckedString += `${i.id},`
+            }
+            categorycheckedString = categorycheckedString.slice(0, categorycheckedString.length - 1)
+            var data = {
+                LobbyName:LobbyName,
+                IsPrivateLobby:isPrivateLobby,
+                RoundCount:roundCount,
+                CategorySelected:categorycheckedString
+            }
+            connection.invoke("CreateLobby", JSON.stringify(data)).catch(function (err) {
+                return console.error(err.toString());
+            });
+        })
+        function checkcategoryischeckofnot() {
+            var categoryChecked = document.getElementsByClassName("categoryBtn");
+            for (var i of categoryChecked) {
+                if (i.className.indexOf("categoryChecked") != -1) {
+                    i.querySelector("i").classList.remove("fa-x")
+                    i.querySelector("i").classList.add("fa-check")
+                } else {
+                    i.querySelector("i").classList.add("fa-x")
+                    i.querySelector("i").classList.remove("fa-check")
+                }
+            }
+        }
     </script>
 }

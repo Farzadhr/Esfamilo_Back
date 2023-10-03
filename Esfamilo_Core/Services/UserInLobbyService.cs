@@ -60,6 +60,13 @@ namespace Esfamilo_Core.Services
             return Entities;
         }
 
+        public async Task<List<UserInLobby>> GetUserInLobbybyLobbyID(int lobbyid)
+        {
+            var Entities = await _repository.GetAll();
+            var UserInLobbies = Entities.Where(x=>x.LobbyId== lobbyid).ToList();
+            return UserInLobbies;
+        }
+
         public async Task Update(UserInLobby entity)
         {
             await _repository.Update(entity);
