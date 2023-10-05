@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace Esfamilo_Domain.Interfaces
 {
-    public interface ILobbyRepository : IGenericRepository<Lobby>
+    public interface IChatMessageInLobbyRepository : IGenericRepository<ChatMessageInLobby>
     {
-        Task<IEnumerable<UserInLobby>> GetUserInLobbiesFromLobbies(int lobbiesId);
     }
 }

@@ -27,7 +27,7 @@
             <div class="main">
                 <div class="manageLobby">
                     <div class="joinLobby">
-                        <button>پیوستن به لابی</button>
+                        <button id="OpenLobbiesPage">پیوستن به لابی</button>
                     </div>
                     <div class="createLobby">
                         <button id="OpenCreateLobbyPage">ساخت لابی</button>
@@ -142,6 +142,10 @@
                             <input type="number" id="roundCountLobby" min="1" max="8" value="1">
                             <label for="">تعداد دور</label>
                         </div>
+                        <div class="roundCount">
+                            <input type="number" id="limitUserLobbyCount" min="2" max="12" value="3">
+                            <label for="">تعداد نفرات</label>
+                        </div>
                     </div>
                     <div class="lobbyCategory">
                         <h3>انتخاب دسته</h3>
@@ -209,19 +213,12 @@
                         </div>
                     </div>
                     <div class="menuNav">
-                        <button class="menuBtn"><i class="fa-solid fa-close"></i></button>
+                        <button class="menuBtn" id="CloseLobbiesPage"><i class="fa-solid fa-close"></i></button>
                     </div>
                 </div>
             </div>
             <div class="main">
-                <ul class="listLobby">
-                    <li>
-                        <div class="listLobbyDetail">
-                            <p class="listLobbyName">تهران</p>
-                            <p class="listLobbyUser">8/2 <i class="fa fa-eye"></i></p>
-                        </div>
-                        <div class="listLobbyOpen"><i class="fa fa-door-open"></i></div>
-                    </li>
+                <ul class="listLobby" id="ListOfLobbiesInLobbiesPage">
                 </ul>
                 <div class="createLobbyInList">
                     <button class="createLobbyInListBtn">ساخت لابی جدید</button>
@@ -427,7 +424,6 @@
     </div>
 </div>
 @section Scripts{
-    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/Paging.js"></script>
     <script src="~/js/ManageLobby.js"></script>
 
@@ -460,15 +456,17 @@
             var LobbyName = $("#LobbyNameForm").val();
             var isPrivateLobby = ($("#CheckPrivateLobby").attr("checked") == "checked") ? true : false
             var roundCount = $("#roundCountLobby").val();
+            var limitusercount = $("#limitUserLobbyCount").val();
             for (var i of categoryChecked) {
                 categorycheckedString += `${i.id},`
             }
             categorycheckedString = categorycheckedString.slice(0, categorycheckedString.length - 1)
             var data = {
-                LobbyName:LobbyName,
-                IsPrivateLobby:isPrivateLobby,
-                RoundCount:roundCount,
-                CategorySelected:categorycheckedString
+                LobbyName: LobbyName,
+                IsPrivateLobby: isPrivateLobby,
+                RoundCount: roundCount,
+                CategorySelected: categorycheckedString,
+                LimitUserCount: limitusercount
             }
             connection.invoke("CreateLobby", JSON.stringify(data)).catch(function (err) {
                 return console.error(err.toString());

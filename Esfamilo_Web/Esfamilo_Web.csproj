@@ -29,4 +29,12 @@
     <Folder Include="wwwroot\Profileimg\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Lobby.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Lobby.cshtml" />
+  </ItemGroup>
+
 </Project>

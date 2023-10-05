@@ -1,0 +1,66 @@
+﻿@page "{LobbyUID?}"
+@model Esfamilo_Web.Pages.LobbyModel
+@{
+}
+<div id="DesktopDivContainer">
+    <div class="Page" id="LoginPage" show>
+        <div class="container">
+            <div class="navbarContainer">
+                <div class="navbar">
+                    <img src="img/Logo/FullLogo-light.png" alt="EsFamilo Logo">
+                    <div class="profileNav">
+                        <div class="profileImg" style="background-image:url(img/User-Profile-PNG-Image.png);background-size: cover;"></div>
+                        <div class="profileDetail">
+                            <p class="profileUsername">@Model.CurrentUser.UserName</p>
+                            <p class="profileScore">@Model.CurrentUser.Score<i class="starScore fa-solid fa-star"></i></p>
+                        </div>
+                    </div>
+                    <div class="menuNav">
+                        <a asp-page="Index" class="menuBtn"><i class="fa-solid fa-close"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="LobbyPageContainer">
+                    <h2>آیدی لابی: @Model.thisLobby.LobbyGuid</h2>
+                    <ul class="listUserInLobby" id="ListOfUserInLobby">
+                        @foreach (var i in Model.UserInLobbies)
+                        {
+                            <li id="@i.UserId">
+                                <div class="UserinLobbyDetail">
+                                    <p class="UserInLobbyName">@Model.GetUserWithID(i.UserId).Result.UserName</p>
+                                    <p class="UserInLobbyUserScore">@i.UserScore <i class="fa fa-trophy"></i></p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <div class="footerOfUserInLobby">
+                        <button class="GoToGameBtn">شروع دور @Model.thisLobby.RoundCount/@Model.thisLobby.CurrentRound</button>
+                        <button class="ShowScoresBtn">مشاهده امتیازات</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="chat">
+                <div class="messages">
+                    <ul class="messageUl" id="MessagesUlContainer">
+                        <li class="spaceli"></li>
+                    </ul>
+                </div>
+                <div class="sendMessage">
+                    <form id="sendMessageForm">
+                        <textarea name="" id="SendMessageTextInMessageLobby" placeholder=""></textarea>
+                        <input type="submit" value="ارسال پیام">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/Lobby.js"></script>
+
+    <script>
+
+    </script>
+}

@@ -3,6 +3,7 @@ using Esfamilo_Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Esfamilo_Data.Migrations
 {
     [DbContext(typeof(EsfamiloDbContext))]
-    partial class EsfamiloDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231003195008_AddLimitcountUser")]
+    partial class AddLimitcountUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,36 +61,6 @@ namespace Esfamilo_Data.Migrations
                     b.HasIndex("LobbyId");
 
                     b.ToTable("categoryInLobbies");
-                });
-
-            modelBuilder.Entity("Esfamilo_Domain.Models.ChatMessageInLobby", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("LobbyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SenderName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LobbyId");
-
-                    b.ToTable("chatMessageInLobbies");
                 });
 
             modelBuilder.Entity("Esfamilo_Domain.Models.Friend", b =>
@@ -220,17 +192,6 @@ namespace Esfamilo_Data.Migrations
                     b.Navigation("Lobby");
                 });
 
-            modelBuilder.Entity("Esfamilo_Domain.Models.ChatMessageInLobby", b =>
-                {
-                    b.HasOne("Esfamilo_Domain.Models.Lobby", "Lobby")
-                        .WithMany("ChatMessageInLobbies")
-                        .HasForeignKey("LobbyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lobby");
-                });
-
             modelBuilder.Entity("Esfamilo_Domain.Models.UserInLobby", b =>
                 {
                     b.HasOne("Esfamilo_Domain.Models.Lobby", "lobby")
@@ -256,8 +217,6 @@ namespace Esfamilo_Data.Migrations
             modelBuilder.Entity("Esfamilo_Domain.Models.Lobby", b =>
                 {
                     b.Navigation("CategoryInLobbies");
-
-                    b.Navigation("ChatMessageInLobbies");
 
                     b.Navigation("UserInLobbies");
 

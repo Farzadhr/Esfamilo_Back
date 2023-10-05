@@ -53,6 +53,12 @@ namespace Esfamilo_Data.Repositories
             return Entities;
         }
 
+        public async Task<IEnumerable<UserInLobby>> GetUserInLobbiesFromLobbies(int lobbiesId)
+        {
+            var Entities = await _context.Lobbies.Where(x => x.Id == lobbiesId).Include(n => n.UserInLobbies).Select(x => x.UserInLobbies).ToListAsync();
+            return Entities[0];
+        }
+
         public async Task Update(Lobby entity)
         {
             _context.Lobbies.Update(entity);

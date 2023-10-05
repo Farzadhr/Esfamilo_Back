@@ -14,8 +14,10 @@ namespace Esfamilo_Domain.Models
         public string LobbyName { get; set; }
         public int RoundCount { get; set; }
         public int CurrentRound { get; set; }
+        public int LimitUserCount { get; set; }
         public virtual List<UserInLobby> UserInLobbies { get; set; }
         public virtual List<WordForCategory> WordForCategories { get; set; }
         public virtual List<CategoryInLobby> CategoryInLobbies { get; set; }
+        public virtual List<ChatMessageInLobby> ChatMessageInLobbies { get; set; }
     }
 }

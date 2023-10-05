@@ -34,6 +34,18 @@ $("#CloseCreateLobbyPage").click(function (e) {
     $("#Home").slideDown(500)
     $("#Home").attr("show", true);
 })
+$("#OpenLobbiesPage").click(function (e) {
+    $("#Home").removeAttr("show")
+    $("#Home").slideUp(500);
+    $("#Lobbies").slideDown(500)
+    $("#Lobbies").attr("show", true);
+})
+$("#CloseLobbiesPage").click(function (e) {
+    $("#Lobbies").removeAttr("show")
+    $("#Lobbies").slideUp(500);
+    $("#Home").slideDown(500)
+    $("#Home").attr("show", true);
+})
 showandoffpage();
 function showandoffpage() {
     var pages = document.getElementsByClassName("Page")

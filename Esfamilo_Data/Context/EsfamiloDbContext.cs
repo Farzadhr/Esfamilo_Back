@@ -21,5 +21,6 @@ namespace Esfamilo_Data.Context
         public DbSet<UserInLobby> userInLobbies { get; set; }
         public DbSet<WordForCategory> WordForCategories { get; set; }
         public DbSet<CategoryInLobby> categoryInLobbies { get; set; }
+        public DbSet<ChatMessageInLobby> chatMessageInLobbies { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace Esfamilo_Core.ModelView
         public string LobbyGuid { get; set; }
         public string LobbyName { get; set; }
         public string CountUserInLobby { get; set; }
+        public int LimitUserCount { get; set; }
     }
 }

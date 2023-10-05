@@ -59,6 +59,18 @@ namespace Esfamilo_Core.Services
             return Entities;
         }
 
+        public async Task<Lobby> GetLobbyWithUID(string UID)
+        {
+            var enitity = await _repository.GetAll();
+            return enitity.FirstOrDefault(x => x.LobbyGuid == UID);
+        }
+
+        public async Task<IEnumerable<UserInLobby>> GetUserInLobbiesFromLobby(int id)
+        {
+            var entities = await _repository.GetUserInLobbiesFromLobbies(id);
+            return entities;
+        }
+
         public async Task Update(Lobby entity)
         {
             await _repository.Update(entity);

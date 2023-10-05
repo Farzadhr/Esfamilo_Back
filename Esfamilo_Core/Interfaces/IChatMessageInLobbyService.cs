@@ -8,9 +8,7 @@ using System.Threading.Tasks;
 
 namespace Esfamilo_Core.Interfaces
 {
-    public interface IUserInLobbyService : IGenericService<UserInLobby>
+    public interface IChatMessageInLobbyService : IGenericService<ChatMessageInLobby>
     {
-        Task<List<UserInLobby>> GetUserInLobbybyLobbyID(int lobbyid);
-        Task<UserInLobby> GetUserInLobbyByUserId(string userId);
     }
 }

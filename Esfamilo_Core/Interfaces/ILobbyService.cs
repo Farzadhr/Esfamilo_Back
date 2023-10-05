@@ -10,5 +10,7 @@ namespace Esfamilo_Core.Interfaces
 {
     public interface ILobbyService : IGenericService<Lobby>
     {
+        Task<Lobby> GetLobbyWithUID(string UID);
+        Task<IEnumerable<UserInLobby>> GetUserInLobbiesFromLobby(int id);
     }
 }

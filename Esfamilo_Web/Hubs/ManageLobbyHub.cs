@@ -23,7 +23,25 @@ namespace Esfamilo_Web.Hubs
             _userManager = userManager;
             this.userInLobby = userInLobby;
         }
+        public async override Task OnConnectedAsync()
+        {
+            var lobbies = await lobbyService.GetAll();
+            List<LobbyForList> getlobbyforlist = new List<LobbyForList>();
+            foreach(var lobb in lobbies)
+            {
+                var userlengthinlobby = await userInLobby.GetUserInLobbybyLobbyID(lobb.Id);
+                getlobbyforlist.Add(new LobbyForList
+                {
+                    LobbyGuid= lobb.LobbyGuid,
+                    LobbyName = lobb.LobbyName,
+                    CountUserInLobby = userlengthinlobby.Count.ToString(),
+                    LimitUserCount = lobb.LimitUserCount
+                });
+            }
 
+            await Clients.Caller.SendAsync("ConnectedUserGetLobbies",JsonConvert.SerializeObject(getlobbyforlist));
+            await base.OnConnectedAsync();
+        }
         public async Task CreateLobby(string data)
         {
             AddLobbyForHub AddLobby = JsonConvert.DeserializeObject<AddLobbyForHub>(data);
@@ -32,13 +50,14 @@ namespace Esfamilo_Web.Hubs
                 LobbyName = AddLobby.LobbyName,
                 LobbyGuid = RandomUID.GetRandomUID(),
                 RoundCount = AddLobby.RoundCount,
-                CurrentRound = 1
+                CurrentRound = 1,
+                LimitUserCount = AddLobby.LimitUserCount,
             });
 
 
 
             var categoryselected = AddLobby.CategorySelected.Split(',');
-            foreach(var category in categoryselected)
+            foreach (var category in categoryselected)
             {
                 var cateId = await _category.GetByCateName(category);
                 await categoryInLobbyService.Add(new CategoryInLobby
@@ -61,8 +80,10 @@ namespace Esfamilo_Web.Hubs
                 LobbyName = lobby.LobbyName,
                 LobbyGuid = lobby.LobbyGuid,
                 CountUserInLobby = userlengthinlobby.Count.ToString(),
+                LimitUserCount = lobby.LimitUserCount
             });
-            await Clients.All.SendAsync("CheckLobby", SenderData );
+            await Clients.All.SendAsync("CheckLobby", SenderData);
+            await Clients.Caller.SendAsync("SendOwnerToLobby", lobby.LobbyGuid);
         }
     }
 }

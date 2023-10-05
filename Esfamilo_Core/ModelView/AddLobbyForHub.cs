@@ -12,5 +12,6 @@ namespace Esfamilo_Core.ModelView
         public bool IsPrivateLobby { get; set; }
         public int RoundCount { get; set; }
         public string CategorySelected { get; set; }
+        public int LimitUserCount { get; set; }
     }
 }

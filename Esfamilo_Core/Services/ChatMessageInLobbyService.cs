@@ -9,16 +9,15 @@ using System.Threading.Tasks;
 
 namespace Esfamilo_Core.Services
 {
-    public class UserInLobbyService : IUserInLobbyService
+    public class ChatMessageInLobbyService : IChatMessageInLobbyService
     {
-        private IUserInLobbyRepository
-            _repository;
-        public UserInLobbyService(IUserInLobbyRepository repository)
+        private IChatMessageInLobbyService _repository;
+        public ChatMessageInLobbyService(IChatMessageInLobbyService repository)
         {
             _repository = repository;
         }
 
-        public async Task<UserInLobby> Add(UserInLobby entity)
+        public async Task<ChatMessageInLobby> Add(ChatMessageInLobby entity)
         {
             if (entity == null)
             {
@@ -33,7 +32,7 @@ namespace Esfamilo_Core.Services
             var Entity = await _repository.Get(id);
             if (Entity != null)
             {
-                await _repository.Delete(Entity);
+                await _repository.Delete(id);
             }
             else
             {
@@ -41,7 +40,7 @@ namespace Esfamilo_Core.Services
             }
         }
 
-        public async Task<UserInLobby> Get(int Id)
+        public async Task<ChatMessageInLobby> Get(int Id)
         {
             var Entity = await _repository.Get(Id);
             if (Entity != null)
@@ -54,26 +53,13 @@ namespace Esfamilo_Core.Services
             }
         }
 
-        public async Task<IEnumerable<UserInLobby>> GetAll()
+        public async Task<IEnumerable<ChatMessageInLobby>> GetAll()
         {
             var Entities = await _repository.GetAll();
             return Entities;
         }
 
-        public async Task<List<UserInLobby>> GetUserInLobbybyLobbyID(int lobbyid)
-        {
-            var Entities = await _repository.GetAll();
-            var UserInLobbies = Entities.Where(x=>x.LobbyId== lobbyid).ToList();
-            return UserInLobbies;
-        }
-
-        public async Task<UserInLobby> GetUserInLobbyByUserId(string userId)
-        {
-            var entity = await _repository.GetAll();
-            return entity.FirstOrDefault(x => x.UserId == userId);
-        }
-
-        public async Task Update(UserInLobby entity)
+        public async Task Update(ChatMessageInLobby entity)
         {
             await _repository.Update(entity);
         }

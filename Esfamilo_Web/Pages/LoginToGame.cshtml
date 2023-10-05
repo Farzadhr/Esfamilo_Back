@@ -2,37 +2,75 @@
 @model Esfamilo_Web.Pages.LoginToGameModel
 @{
 }
-<div class="loginPageContainer">
-    <div class="loginLogo">
-        <img src="img/Logo/FullLogo-dark.png" alt="">
-    </div>
-    <div class="LoginAccount">
-        <h2>ورود به حساب کاربری</h2>
-    </div>
-    <form method="post" class="formLogin">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="text" placeholder="نام کاربری" asp-for="Input.UserName">
-        <span asp-validation-for="Input.UserName" class="text-danger"></span>
-        <input type="password" placeholder="رمز عبور" asp-for="Input.Password">
-        <span asp-validation-for="Input.Password" class="text-danger"></span>
-        <input type="checkbox" asp-for="Input.RememberMe" style="display:none" id="inputRemember"/>
-        <div class="rememberContainer">
-            <div class="remember">
-                <div class="divCheck" id="divRemember"><i class="fa-solid fa-check"></i></div>
-                <p>من را به یاد داشته باش</p>
+<div id="DesktopDivContainer">
+    <div class="Page" id="LoginPage">
+        <div class="loginPageContainer">
+            <div class="loginLogo">
+                <img src="img/Logo/FullLogo-dark.png" alt="">
             </div>
+            <div class="LoginAccount">
+                <h2>ورود به حساب کاربری</h2>
+            </div>
+            <form method="post" class="formLogin">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="text" placeholder="نام کاربری" asp-for="Input.UserName">
+                <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                <input type="password" placeholder="رمز عبور" asp-for="Input.Password">
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <input type="checkbox" asp-for="Input.RememberMe" style="display:none" id="inputRemember" />
+                <div class="rememberContainer">
+                    <div class="remember">
+                        <div class="divCheck" id="divRemember"><i class="fa-solid fa-check"></i></div>
+                        <p>من را به یاد داشته باش</p>
+                    </div>
 
+                </div>
+                <div class="forgotFassword">
+                    <p>رمز عبور خود را فراموش کرده اید؟</p>
+                </div>
+                <div class="register">
+                    <button type="submit">
+                        ورود / ثبت نام
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="forgotFassword">
-            <p>رمز عبور خود را فراموش کرده اید؟</p>
-        </div>
-        <div class="register">
-            <button type="submit">
-                ورود / ثبت نام
-            </button>
-        </div>
-    </form>
+    </div>
 </div>
+<div id="MobileDivContainer">
+    <div class="Page" id="LoginPage">
+        <div class="loginLogo">
+            <img src="img/Logo/FullLogo-dark.png" alt="">
+        </div>
+        <div class="LoginAccount">
+            <h2>ورود به حساب کاربری</h2>
+        </div>
+        <form method="post" class="formLogin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="text" placeholder="نام کاربری" asp-for="Input.UserName">
+            <span asp-validation-for="Input.UserName" class="text-danger"></span>
+            <input type="password" placeholder="رمز عبور" asp-for="Input.Password">
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+            <input type="checkbox" asp-for="Input.RememberMe" style="display:none" id="inputRemember" />
+            <div class="rememberContainer">
+                <div class="remember">
+                    <div class="divCheck"><i class="fa-solid fa-check"></i></div>
+                    <p>من را به یاد داشته باش</p>
+                </div>
+
+            </div>
+            <div class="forgotFassword">
+                <p>رمز عبور خود را فراموش کرده اید؟</p>
+            </div>
+            <div class="register">
+                <button>
+                    ورود / ثبت نام
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 @section Scripts{
     <partial name="_ValidationScriptsPartial" />
     <script>
@@ -41,7 +79,7 @@
             checkremember()
         });
         checkremember()
-        function checkremember(){
+        function checkremember() {
             if ($("#divRemember").hasClass("divChecked")) {
                 $("#inputRemember").attr("checked", false);
                 $("#divRemember").removeClass("divChecked");

@@ -576,7 +576,7 @@ body {
 .roundCount input {
     border: 2px solid var(--blue);
     color: var(--blue);
-    padding: 5px 17px;
+    text-align:center;
     border-radius: 20px;
     font-size: 20px;
     font-weight: 700;
@@ -680,7 +680,6 @@ body {
 }
 
 .createLobbyInList {
-    height: 30%;
     width: 50%;
     margin: 0 auto;
     display: flex;
@@ -751,3 +750,89 @@ body {
     align-items: center;
     height: 100%;
 }
+
+/*! Lobby PAGE----------<><><><><><><><><><><><><><><><><> */
+.LobbyPageContainer {
+    width: 100%;
+    height: calc(100% - 20px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+    .LobbyPageContainer h2 {
+        height: 5%;
+        margin: 0;
+    }
+
+.listUserInLobby {
+    height: 75%;
+    width: 70%;
+    margin: 15px auto;
+    padding: 20px 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+    .listUserInLobby li {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        flex-direction: row;
+        border: 2px solid var(--blue);
+        border-radius: 40px;
+        margin-bottom: 20px;
+        color: var(--blue);
+    }
+
+.UserinLobbyDetail {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+    .UserinLobbyDetail .UserInLobbyUserScore i {
+        color: var(--pink);
+    }
+/* width */
+.listUserInLobby::-webkit-scrollbar {
+    width: 5px;
+    background-color: white;
+}
+
+/* Track */
+.listUserInLobby::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* Handle */
+.listUserInLobby::-webkit-scrollbar-thumb {
+    background: var(--ligntPink);
+    border-radius: 10px;
+}
+
+.footerOfUserInLobby {
+    height: 20%;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .footerOfUserInLobby button {
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        background-color: var(--blue);
+        color: white;
+        font-size: 18px;
+    }
+
+        .footerOfUserInLobby button.ShowScoresBtn {
+            background-color: var(--pink);
+        }
