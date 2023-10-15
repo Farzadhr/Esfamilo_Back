@@ -27,6 +27,13 @@ namespace Esfamilo_Core.Services
             return Entity;
         }
 
+        public async Task ChangeIsGameStatus(bool isGame, int LobbyId)
+        {
+            var lobby = await _repository.Get(LobbyId);
+            lobby.InGameStatus = isGame;
+            await Update(lobby);
+        }
+
         public async Task Delete(int id)
         {
             var Entity = await _repository.Get(id);

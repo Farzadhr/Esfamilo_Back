@@ -40,6 +40,12 @@ namespace Esfamilo_Core.Services
             return Entities;
         }
 
+        public async Task<IEnumerable<Category>> GetCategoryInLobbies(int lobbyid)
+        {
+            var Entities = await _repository.GetCategoryInLobbies(lobbyid);
+            return Entities;
+        }
+
         public async Task Update(CategoryInLobby entity)
         {
             await _repository.Update(entity);

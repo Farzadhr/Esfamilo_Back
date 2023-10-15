@@ -1,0 +1,66 @@
+﻿@page "{LobbyUID}/{TargetLetter}"
+@using System.Security.Claims;
+@model Esfamilo_Web.Pages.GameModel
+@{
+}
+<div class="Page" id="ShowWordForCategoryPage">
+    <div class="ShowWordForCategory" id="ShowWordForCategory">
+        1
+    </div>
+    <p class="ShowWordTip">
+        میدونستی اگر عدد 1 رو تایپ کنی به دسته بعدی میری <br> اگر عدد 2 رو تایپ کنی به دسته
+        قبلی میری
+    </p>
+</div>
+<div class="Page" id="WaitToCheckScorePage">
+    <p class="ShowWordTip" id="CheckScoreText">
+        در حال ثبت کردن امتیاز ها <br /> لطفا کمی صبر کنید
+    </p>
+</div>
+<div class="Page" id="GamePage">
+    <div class="container">
+        <div class="navbarContainer">
+            <div class="navbar">
+                <img src="~/img/Logo/FullLogo-light.png" alt="EsFamilo Logo">
+                <div class="profileNav">
+                    <div class="profileImg"></div>
+                    <div class="profileDetail">
+                        <p class="profileUsername">نام کاربری</p>
+                        <p class="profileScore">9861<i class="starScore fa-solid fa-star"></i></p>
+                    </div>
+                </div>
+                <div class="menuNav">
+                    <a asp-page="Index" class="menuBtn" style="color:var(--blue)"><i class="fa-solid fa-close"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="main">
+            <div class="GameMainContainer">
+                <div class="HeaderGameMain">
+                    <h2 id="TargetWordText">بازی با کلمه</h2>
+                    <h2 id="TimerGame">2:08</h2>
+                </div>
+
+                <ul class="ListCategroyInGame" id="ListCategroyInGame">
+                    @for (int i = 0; i < Model.CategoryInLobbies.Count(); i++)
+                    {
+                        <li>
+                            <p>@Model.CategoryInLobbies[i].CategroyName.GetCategoryPersianName() :</p>
+                            <input type="text" class="WordInputOfCategory" data-index="@string.Format("{0}",i+1)" id="@Model.CategoryInLobbies[i].CategroyName">
+                        </li>
+                    }
+                </ul>
+                <div class="FooterOfGame">
+                    <button class="StopGameBtn" id="StopGameBtn">استوپ</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        const UserId = "@User.FindFirstValue(ClaimTypes.NameIdentifier)"
+    </script>
+    <script src="~/js/Game.js"></script>
+}

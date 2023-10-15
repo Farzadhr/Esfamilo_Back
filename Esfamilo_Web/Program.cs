@@ -57,6 +57,7 @@ namespace Esfamilo_Web
             app.MapRazorPages();
             app.MapHub<ManageLobbyHub>("/ManageLobbyHub");
             app.MapHub<LobbyHub>("/LobbyHub");
+            app.MapHub<GameHub>("/GameHub");
 
             app.Run();
         }

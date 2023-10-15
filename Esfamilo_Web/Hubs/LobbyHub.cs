@@ -1,8 +1,10 @@
 ﻿using Esfamilo_Core.Interfaces;
 using Esfamilo_Core.ModelView;
+using Esfamilo_Core.Services;
 using Esfamilo_Domain.Models;
 using Esfamilo_Web.Data;
 using Esfamilo_Web.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -18,7 +20,8 @@ namespace Esfamilo_Web.Hubs
         private UserManager<IdentityUser> _userManager;
         private IHttpContextAccessor httpContextAccessor;
         private ApplicationDbContext _context;
-        public LobbyHub(ILobbyService lobbyService, ICategoryInLobbyService wordForCategoryService, ICategoryService service, UserManager<IdentityUser> userManager, IUserInLobbyService userInLobby, IHttpContextAccessor httpContextAccessor,ApplicationDbContext context)
+        private IWordForCategoryService wordService;
+        public LobbyHub(ILobbyService lobbyService, ICategoryInLobbyService wordForCategoryService, ICategoryService service, UserManager<IdentityUser> userManager, IUserInLobbyService userInLobby, IHttpContextAccessor httpContextAccessor, ApplicationDbContext context, IWordForCategoryService wordForCategoryService1)
         {
             this.lobbyService = lobbyService;
             categoryInLobbyService = wordForCategoryService;
@@ -26,8 +29,11 @@ namespace Esfamilo_Web.Hubs
             _userManager = userManager;
             this.userInLobby = userInLobby;
             this.httpContextAccessor = httpContextAccessor;
-            _context= context;
+            _context = context;
+            wordService = wordForCategoryService1;
         }
+
+
         public override async Task OnConnectedAsync()
         {
             ApplicationUser getUser = (ApplicationUser)await _userManager.GetUserAsync(Context.User);
@@ -45,10 +51,10 @@ namespace Esfamilo_Web.Hubs
                     LobbyId = Lobby.Id,
                 });
             }
-            await Groups.AddToGroupAsync(Context.ConnectionId, Lobby.LobbyGuid);
+            await Groups.AddToGroupAsync(Context.ConnectionId, lobbyuid.ToString());
             var UsersinLobby = await userInLobby.GetUserInLobbybyLobbyID(Lobby.Id);
-            List<UserInLobbyForLobby> userInLobbyForLobbies= new List<UserInLobbyForLobby>();
-            foreach(var user in UsersinLobby)
+            List<UserInLobbyForLobby> userInLobbyForLobbies = new List<UserInLobbyForLobby>();
+            foreach (var user in UsersinLobby)
             {
                 userInLobbyForLobbies.Add(new UserInLobbyForLobby
                 {
@@ -63,27 +69,35 @@ namespace Esfamilo_Web.Hubs
         }
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            ApplicationUser cuser = await _userManager.GetUserAsync(Context.User) as ApplicationUser;
-            var getUserInLobby = await userInLobby.GetUserInLobbyByUserId(cuser.Id);
-            if(getUserInLobby != null)
+            var lobbyuid = Context.GetHttpContext().Request.Query["LobbyUID"];
+            var lobbyIsGameStatus = lobbyService.GetLobbyWithUID(lobbyuid).Result.InGameStatus;
+            if (lobbyIsGameStatus == false)
             {
-                var lobby = await lobbyService.Get(getUserInLobby.LobbyId);
-                if (getUserInLobby.IsUserOwner == false)
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyuid.ToString());
+                ApplicationUser cuser = await _userManager.GetUserAsync(Context.User) as ApplicationUser;
+                var getUserInLobby = await userInLobby.GetUserInLobbyByUserId(cuser.Id);
+                if (getUserInLobby != null)
                 {
-                    await userInLobby.Delete(getUserInLobby.Id);
+                    var lobby = await lobbyService.Get(getUserInLobby.LobbyId);
+                    if (getUserInLobby.IsUserOwner == false)
+                    {
+                        await userInLobby.Delete(getUserInLobby.Id);
+                    }
+                    else
+                    {
+                        await lobbyService.Delete(getUserInLobby.LobbyId);
+                        await Clients.Group(lobby.LobbyGuid).SendAsync("OutAllLobbyUser");
+                    }
                 }
-                else
-                {
-                    await Clients.Group(lobby.LobbyGuid).SendAsync("OutAllLobbyUser");
-                    await lobbyService.Delete(getUserInLobby.LobbyId);
-                }
-            }
 
+
+            }
 
             await base.OnDisconnectedAsync(exception);
         }
         public async Task SendMessage(string message)
         {
+            var lobbyuid = Context.GetHttpContext().Request.Query["LobbyUID"];
             ApplicationUser senderuser = await _userManager.GetUserAsync(Context.User) as ApplicationUser;
             var currentUsesUserInLobby = await userInLobby.GetUserInLobbyByUserId(senderuser.Id);
             var SendMessage = new ChatMessageInLobby
@@ -93,8 +107,18 @@ namespace Esfamilo_Web.Hubs
                 LobbyId = currentUsesUserInLobby.LobbyId,
                 Message = message
             };
-            await Clients.Caller.SendAsync("CheckSenderMessage",JsonConvert.SerializeObject(SendMessage),true);
-            await Clients.Others.SendAsync("CheckClientMessage", JsonConvert.SerializeObject(SendMessage));
+            await Clients.Caller.SendAsync("CheckSenderMessage", JsonConvert.SerializeObject(SendMessage), true);
+            await Clients.OthersInGroup(lobbyuid.ToString()).SendAsync("CheckClientMessage", JsonConvert.SerializeObject(SendMessage));
+        }
+        public async Task GoUsersToRoom()
+        {
+            var lobbyuid = Context.GetHttpContext().Request.Query["LobbyUID"];
+            var lobby = await lobbyService.GetLobbyWithUID(lobbyuid);
+            await lobbyService.ChangeIsGameStatus(true, lobby.Id);
+            var getusedtargetletter = await wordService.GetUsedTargetLetter(lobby.Id);
+            var targetletter = RandomLetter.GetRandomLetter(getusedtargetletter);
+            var GotoGameUrl = $"/Game/{lobbyuid.ToString()}/{targetletter}";
+            await Clients.Group(lobbyuid.ToString()).SendAsync("GotoGameAllUserLobby", GotoGameUrl);
         }
         public async Task<ApplicationUser> GetUserById(string userid)
         {

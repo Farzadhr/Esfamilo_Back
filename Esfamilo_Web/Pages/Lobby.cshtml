@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="menuNav">
-                        <a asp-page="Index" class="menuBtn"><i class="fa-solid fa-close"></i></a>
+                        <a asp-page="Index" class="menuBtn" style="color:var(--blue)"><i class="fa-solid fa-close"></i></a>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                         }
                     </ul>
                     <div class="footerOfUserInLobby">
-                        <button class="GoToGameBtn">شروع دور @Model.thisLobby.RoundCount/@Model.thisLobby.CurrentRound</button>
+                        <button id="btnstartgameinlobby" class="GoToGameBtn">شروع دور @Model.thisLobby.RoundCount/@Model.thisLobby.CurrentRound</button>
                         <button class="ShowScoresBtn">مشاهده امتیازات</button>
                     </div>
                 </div>

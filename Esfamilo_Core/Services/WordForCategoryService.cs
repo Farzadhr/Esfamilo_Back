@@ -59,6 +59,35 @@ namespace Esfamilo_Core.Services
             return Entities;
         }
 
+        public async Task<List<WordForCategory>> GetAllWordsFromLobby(int lobbyid)
+        {
+            var Entities = await _repository.GetAll();
+            var WordsinLobby = Entities.Where(x=>x.LobbyId== lobbyid).ToList();
+            return WordsinLobby;
+        }
+
+        public async Task<List<WordForCategory>> GetAllWordsFromUserId(string UserId)
+        {
+            var Entities = await _repository.GetAll();
+            var WordsForUser = Entities.Where(x => x.UserId == UserId).ToList();
+            return WordsForUser;
+        }
+
+        public async Task<string> GetUsedTargetLetter(int lobbyid)
+        {
+            var Entities = await _repository.GetAll();
+            if(Entities.Count() > 0)
+            {
+                var getletters = Entities.Where(x => x.LobbyId == lobbyid).Select(x => x.TargetLetter).Distinct().ToList();
+                return string.Join(",", getletters);
+            }
+            else
+            {
+                return "";
+            }
+
+        }
+
         public async Task Update(WordForCategory entity)
         {
             await _repository.Update(entity);

@@ -10,5 +10,6 @@ namespace Esfamilo_Domain.Interfaces
 {
     public interface ICategoryInLobbyRepository : IGenericRepository<CategoryInLobby>
     {
+        Task<IEnumerable<Category>> GetCategoryInLobbies(int lobbyId);
     }
 }

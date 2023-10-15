@@ -10,5 +10,6 @@ namespace Esfamilo_Core.Interfaces
 {
     public interface ICategoryInLobbyService : IGenericService<CategoryInLobby>
     {
+        Task<IEnumerable<Category>> GetCategoryInLobbies(int lobbyid);
     }
 }

@@ -45,13 +45,17 @@ namespace Esfamilo_Web.Pages
 
         [BindProperty]
         public InputModel Input { get; set; }
-
-        public IActionResult OnGet()
+        public string returnURL { get; set; }
+        public IActionResult OnGet(string returnUrl ="")
         {
+            if (!string.IsNullOrEmpty(returnUrl))
+                returnURL = returnUrl;
             return Page();
         }
         public async Task<IActionResult> OnPost()
         {
+            if (string.IsNullOrEmpty(returnURL))
+                returnURL = "/Index";
             var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
@@ -68,7 +72,7 @@ namespace Esfamilo_Web.Pages
                 if (resultsign.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToPage("/Index");
+                    return Redirect(returnURL);
                 }
                 else
                 {
@@ -79,7 +83,7 @@ namespace Esfamilo_Web.Pages
             }
             else
             {
-                return RedirectToPage("/Index");
+                return Redirect(returnURL);
             }
         }
         private IUserEmailStore<IdentityUser> GetEmailStore()

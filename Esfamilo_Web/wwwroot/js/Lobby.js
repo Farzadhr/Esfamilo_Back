@@ -1,5 +1,8 @@
 ﻿var connection;
 connection = new signalR.HubConnectionBuilder().withUrl(`/LobbyHub?LobbyUID=${location.pathname.split('/')[2]}`).build();
+connection.on("GotoGameAllUserLobby", function (url) {
+    location.href = url
+})
 connection.on("CheckUsersInLobbies", function (data) {
     console.log(JSON.parse(data))
     var uluser = document.getElementById("ListOfUserInLobby")
@@ -17,8 +20,7 @@ connection.on("CheckUsersInLobbies", function (data) {
 
 })
 connection.on("OutAllLobbyUser", function () {
-    console.log("sdfkadfjkladfjdlfkajldfjlkfjlksajfljdl")
-    location.href = "/Index"
+    location.href = "/"
 })
 connection.on("CheckSenderMessage", function (jdata, isSender) {
     var data = JSON.parse(jdata)
@@ -50,8 +52,12 @@ ulmessages.addEventListener("submit", function (e) {
     var message = document.getElementById("SendMessageTextInMessageLobby")
     if (message.value != null) {
         connection.invoke("SendMessage", message.value)
+        message.value = ""
     } else {
+        message.value = ""
         message.setAttribute("placeholder", "لطفا پیام خود را وارد کنید")
     }
 })
-
+document.getElementById("btnstartgameinlobby").addEventListener("click", function (e) {
+    connection.invoke("GoUsersToRoom")
+})

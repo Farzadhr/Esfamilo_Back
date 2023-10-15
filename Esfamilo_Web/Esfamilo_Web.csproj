@@ -37,4 +37,9 @@
     <_ContentIncludedByDefault Remove="Pages\Lobby.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="Esfamilo_Core.Enums" />
+    <Using Include="Esfamilo_Core.Utilities" />
+  </ItemGroup>
+
 </Project>

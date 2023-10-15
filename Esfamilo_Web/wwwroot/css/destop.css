@@ -299,7 +299,6 @@ body {
     text-align: justify;
 }
 
-
 #sendMessageForm {
     width: 100%;
     height: 100%;
@@ -416,7 +415,7 @@ body {
     }
 
 .divChecked {
-    background-color:var(--blue);
+    background-color: var(--blue);
 }
 
     .divChecked i {
@@ -576,7 +575,7 @@ body {
 .roundCount input {
     border: 2px solid var(--blue);
     color: var(--blue);
-    text-align:center;
+    text-align: center;
     border-radius: 20px;
     font-size: 20px;
     font-weight: 700;
@@ -836,3 +835,140 @@ body {
         .footerOfUserInLobby button.ShowScoresBtn {
             background-color: var(--pink);
         }
+/*! Game PAGE----------<><><><><><><><><><><><><><><><><> */
+#GamePage .main {
+    width: 90%;
+}
+
+.GameMainContainer {
+    width: 100%;
+    height: calc(100% - 20px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.HeaderGameMain {
+    width: 70%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.LobbyPageContainer h2 {
+    height: 5%;
+    margin: 0;
+}
+
+.ListCategroyInGame {
+    height: 75%;
+    width: 70%;
+    margin: 15px auto;
+    padding: 20px 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+    .ListCategroyInGame li {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 20px;
+        color: var(--blue);
+    }
+
+        .ListCategroyInGame li p {
+            width: 10%;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--blue);
+        }
+
+        .ListCategroyInGame li input {
+            padding: 0 10px;
+            font-size: 20px;
+            height: 100%;
+            width: 90%;
+            background-color: transparent;
+            border: none;
+            border-bottom: 2px solid var(--pink) !important;
+            outline: none;
+            border-radius: 20px;
+        }
+    /* width */
+    .ListCategroyInGame::-webkit-scrollbar {
+        width: 5px;
+        background-color: white;
+    }
+
+    /* Track */
+    .ListCategroyInGame::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    .ListCategroyInGame::-webkit-scrollbar-thumb {
+        background: var(--ligntPink);
+        border-radius: 10px;
+    }
+
+.FooterOfGame {
+    height: 20%;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .FooterOfGame button {
+        width: 40%;
+        padding: 10px 20px;
+        border-radius: 8px;
+        border: none;
+        background-color: var(--blue);
+        color: white;
+        font-size: 18px;
+    }
+
+/*! ShwoWordforCategory PAGE----------<><><><><><><><><><><><><><><><><> */
+#ShowWordForCategoryPage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.ShowWordForCategory {
+    font-size: 36px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.ShowWordTip {
+    text-align: center;
+    color: white;
+    font-size: 17px;
+}
+/*! WaitToCheckScorePage PAGE----------<><><><><><><><><><><><><><><><><> */
+#WaitToCheckScorePage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

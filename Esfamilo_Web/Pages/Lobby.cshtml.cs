@@ -25,11 +25,11 @@ namespace Esfamilo_Web.Pages
         public ApplicationUser CurrentUser { get; set; }
         public Lobby thisLobby { get; set; }
         public IEnumerable<UserInLobby> UserInLobbies { get; set; }
-        public async Task<IActionResult> OnGet(string LobbyUID ="fddsf")
+        public async Task<IActionResult> OnGet(string LobbyUID ="")
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToPage("/LoginToGame");
+                return RedirectToPage("/LoginToGame" , new { returnUrl =$"/Lobby/{LobbyUID}"} );
             }
             CurrentUser = await _userManager.GetUserAsync(this.User) as ApplicationUser;
             thisLobby = await lobbyService.GetLobbyWithUID(LobbyUID);

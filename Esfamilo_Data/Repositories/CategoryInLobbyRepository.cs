@@ -54,6 +54,12 @@ namespace Esfamilo_Data.Repositories
             return Entities;
         }
 
+        public async Task<IEnumerable<Category>> GetCategoryInLobbies(int lobbyId)
+        {
+            var Entities = await _context.categoryInLobbies.Where(x=>x.LobbyId == lobbyId).Include(x=>x.Category).Select(x=>x.Category).ToListAsync();
+            return Entities;
+        }
+
         public async Task Update(CategoryInLobby entity)
         {
             _context.categoryInLobbies.Update(entity);

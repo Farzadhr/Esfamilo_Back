@@ -8,10 +8,18 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.Extensions.ML" Version="1.7.1" />
+    <PackageReference Include="Microsoft.ML" Version="1.7.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Esfamilo_Domain\Esfamilo_Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Ml\MLModel1.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

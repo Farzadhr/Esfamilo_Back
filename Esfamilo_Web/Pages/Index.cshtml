@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
 <div id="DesktopDivContainer">
     <div class="Page" id="Home" show>
         <div class="container">
@@ -219,6 +218,21 @@
             </div>
             <div class="main">
                 <ul class="listLobby" id="ListOfLobbiesInLobbiesPage">
+                    @if(Model.ListOfLobbies.Count > 0)
+                    {
+                        @foreach (var i in Model.ListOfLobbies)
+                        {
+                            <li id="@i.LobbyGuid">
+                                <div class="listLobbyDetail">
+                                    <p class="listLobbyName">@i.LobbyName</p>
+                                    <p class="listLobbyUser">@i.LimitUserCount/@i.CountUserInLobby <i class="fa fa-eye"></i></p>
+                                </div>
+                                <a href="/Lobby/@i.LobbyGuid" class="listLobbyOpen"><i class="fa fa-door-open"></i></a>
+                            </li>
+                        }
+                    }
+
+
                 </ul>
                 <div class="createLobbyInList">
                     <button class="createLobbyInListBtn">ساخت لابی جدید</button>
