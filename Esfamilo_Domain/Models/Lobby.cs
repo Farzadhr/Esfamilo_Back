@@ -15,6 +15,7 @@ namespace Esfamilo_Domain.Models
         public int RoundCount { get; set; }
         public int CurrentRound { get; set; }
         public int LimitUserCount { get; set; }
+        public bool IsLimitLobby { get; set; }
         public bool InGameStatus { get; set; }
         public virtual List<UserInLobby> UserInLobbies { get; set; }
         public virtual List<WordForCategory> WordForCategories { get; set; }

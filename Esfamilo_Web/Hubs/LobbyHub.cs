@@ -71,10 +71,10 @@ namespace Esfamilo_Web.Hubs
                     }
                 }
                 var GetUserInLobby = await userInLobby.GetUserInLobbybyLobbyID(Lobby.Id);
-                //if(GetUserInLobby.Count >= Lobby.LimitUserCount)
-                //{
-                    
-                //}
+                if (GetUserInLobby.Count >= Lobby.LimitUserCount)
+                {
+
+                }
             }
             else
             {
