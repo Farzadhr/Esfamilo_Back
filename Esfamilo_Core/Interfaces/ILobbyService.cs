@@ -13,5 +13,6 @@ namespace Esfamilo_Core.Interfaces
         Task<Lobby> GetLobbyWithUID(string UID);
         Task<IEnumerable<UserInLobby>> GetUserInLobbiesFromLobby(int id);
         Task ChangeIsGameStatus(bool isGame,int LobbyId);
+        Task<List<Lobby>> GetAllUnLimitesLobby();
     }
 }

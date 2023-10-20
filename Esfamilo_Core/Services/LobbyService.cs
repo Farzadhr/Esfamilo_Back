@@ -66,6 +66,12 @@ namespace Esfamilo_Core.Services
             return Entities;
         }
 
+        public async Task<List<Lobby>> GetAllUnLimitesLobby()
+        {
+            var entiteis = await _repository.GetAll();
+            return entiteis.Where(x=>x.IsLimitLobby == false).ToList();
+        }
+
         public async Task<Lobby> GetLobbyWithUID(string UID)
         {
             var enitity = await _repository.GetAll();
