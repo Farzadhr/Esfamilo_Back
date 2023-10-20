@@ -44,6 +44,11 @@ connection.on("CheckClientMessage", function (jdata) {
     var ulmessagecon = document.getElementById("MessagesUlContainer")
     ulmessagecon.innerHTML += message
 })
+connection.on("LobbyStopGame", function () {
+    var startbtn = document.getElementById("btnstartgameinlobby")
+    startbtn.setAttribute("disabled", "true");
+    startbtn.style.backgroundColor = "#3a3b61"
+})
 connection.start();
 
 var ulmessages = document.getElementById("sendMessageForm")
@@ -60,4 +65,7 @@ ulmessages.addEventListener("submit", function (e) {
 })
 document.getElementById("btnstartgameinlobby").addEventListener("click", function (e) {
     connection.invoke("GoUsersToRoom")
+})
+document.getElementById("ExitLobbyBtn").addEventListener("click", function (e) {
+    connection.invoke("ExitLobbyCustom")
 })

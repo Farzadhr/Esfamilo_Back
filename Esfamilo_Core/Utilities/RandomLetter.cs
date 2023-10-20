@@ -10,7 +10,7 @@ namespace Esfamilo_Core.Utilities
     {
         public static string GetRandomLetter(string usedLetter)
         {
-            var alphabet = "ا ب پ ت ج چ خ د ر ز ژ س ش ع ف ق ک گ ل م ن و ه ی";
+            var alphabet = "ا ب پ ت ج چ خ د ر ز س ش ع ف ق ک گ ل م ن و ه ی";
             var arrayalphabet = alphabet.Split(" ");
             var random = new Random();
             int rndnum = -1;

@@ -21,7 +21,8 @@ namespace Esfamilo_Web.Hubs
         private IHttpContextAccessor httpContextAccessor;
         private ApplicationDbContext _context;
         private IWordForCategoryService wordService;
-        public LobbyHub(ILobbyService lobbyService, ICategoryInLobbyService wordForCategoryService, ICategoryService service, UserManager<IdentityUser> userManager, IUserInLobbyService userInLobby, IHttpContextAccessor httpContextAccessor, ApplicationDbContext context, IWordForCategoryService wordForCategoryService1)
+        private IHubContext<ManageLobbyHub> _manageLobbyHubContext;
+        public LobbyHub(ILobbyService lobbyService, ICategoryInLobbyService wordForCategoryService, ICategoryService service, UserManager<IdentityUser> userManager, IUserInLobbyService userInLobby, IHttpContextAccessor httpContextAccessor, ApplicationDbContext context, IWordForCategoryService wordForCategoryService1, IHubContext<ManageLobbyHub> manageLobbyHubContext)
         {
             this.lobbyService = lobbyService;
             categoryInLobbyService = wordForCategoryService;
@@ -31,6 +32,7 @@ namespace Esfamilo_Web.Hubs
             this.httpContextAccessor = httpContextAccessor;
             _context = context;
             wordService = wordForCategoryService1;
+            _manageLobbyHubContext = manageLobbyHubContext; 
         }
 
 
@@ -40,18 +42,57 @@ namespace Esfamilo_Web.Hubs
             var httpContext = Context.GetHttpContext();
             var lobbyuid = httpContext.Request.Query["LobbyUID"];
             var Lobby = await lobbyService.GetLobbyWithUID(lobbyuid);
-            var currentUsesUserInLobby = await userInLobby.GetUserInLobbyByUserId(getUser.Id);
-            if (currentUsesUserInLobby == null)
-            {
-                await userInLobby.Add(new UserInLobby
-                {
-                    UserId = getUser.Id,
-                    IsUserOwner = false,
-                    UserScore = 0,
-                    LobbyId = Lobby.Id,
-                });
-            }
             await Groups.AddToGroupAsync(Context.ConnectionId, lobbyuid.ToString());
+            if (Lobby.InGameStatus == false)
+            {
+                var currentUsesUserInLobby = await userInLobby.GetUserInLobbyByUserId(getUser.Id);
+                if (currentUsesUserInLobby == null)
+                {
+                    await userInLobby.Add(new UserInLobby
+                    {
+                        UserId = getUser.Id,
+                        IsUserOwner = false,
+                        UserScore = 0,
+                        LobbyId = Lobby.Id,
+                    });
+                }
+                else
+                {
+                    if(currentUsesUserInLobby.IsUserOwner == false)
+                    {
+                        await userInLobby.Delete(currentUsesUserInLobby.Id);
+                        await userInLobby.Add(new UserInLobby
+                        {
+                            UserId = getUser.Id,
+                            IsUserOwner = false,
+                            UserScore = 0,
+                            LobbyId = Lobby.Id,
+                        });
+                    }
+                }
+                var GetUserInLobby = await userInLobby.GetUserInLobbybyLobbyID(Lobby.Id);
+                //if(GetUserInLobby.Count >= Lobby.LimitUserCount)
+                //{
+                    
+                //}
+            }
+            else
+            {
+                if(userInLobby.GetUserInLobbyByUserId(getUser.Id).Result.IsUserOwner == true)
+                {
+                    Lobby.InGameStatus = false;
+                    if(Lobby.CurrentRound+1 <= Lobby.RoundCount)
+                    {
+                        Lobby.CurrentRound += 1;
+                        await lobbyService.Update(Lobby);
+                    }
+                    else
+                    {
+                        await lobbyService.Update(Lobby);
+                        await Clients.Group(lobbyuid.ToString()).SendAsync("LobbyStopGame");
+                    }
+                }
+            }
             var UsersinLobby = await userInLobby.GetUserInLobbybyLobbyID(Lobby.Id);
             List<UserInLobbyForLobby> userInLobbyForLobbies = new List<UserInLobbyForLobby>();
             foreach (var user in UsersinLobby)
@@ -70,27 +111,34 @@ namespace Esfamilo_Web.Hubs
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
             var lobbyuid = Context.GetHttpContext().Request.Query["LobbyUID"];
-            var lobbyIsGameStatus = lobbyService.GetLobbyWithUID(lobbyuid).Result.InGameStatus;
-            if (lobbyIsGameStatus == false)
+            var Lobby = await lobbyService.GetLobbyWithUID(lobbyuid);
+            if(Lobby != null)
             {
-                await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyuid.ToString());
-                ApplicationUser cuser = await _userManager.GetUserAsync(Context.User) as ApplicationUser;
-                var getUserInLobby = await userInLobby.GetUserInLobbyByUserId(cuser.Id);
-                if (getUserInLobby != null)
+                var lobbyIsGameStatus = Lobby.InGameStatus;
+                if (lobbyIsGameStatus == false)
                 {
-                    var lobby = await lobbyService.Get(getUserInLobby.LobbyId);
-                    if (getUserInLobby.IsUserOwner == false)
+                    ApplicationUser cuser = await _userManager.GetUserAsync(Context.User) as ApplicationUser;
+                    var getUserInLobby = await userInLobby.GetUserInLobbyByUserId(cuser.Id);
+                    if (getUserInLobby != null)
                     {
-                        await userInLobby.Delete(getUserInLobby.Id);
+                        var lobby = await lobbyService.Get(getUserInLobby.LobbyId);
+                        if (getUserInLobby.IsUserOwner == false)
+                        {
+                            await userInLobby.Delete(getUserInLobby.Id);
+                            await Clients.Caller.SendAsync("OutAllLobbyUser");
+                            await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyuid.ToString());
+                        }
+                        else
+                        {
+                            await lobbyService.Delete(getUserInLobby.LobbyId);
+                            await Clients.Group(lobby.LobbyGuid).SendAsync("OutAllLobbyUser");
+                            await Clients.Caller.SendAsync("OutAllLobbyUser");
+                            await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyuid.ToString());
+                        }
                     }
-                    else
-                    {
-                        await lobbyService.Delete(getUserInLobby.LobbyId);
-                        await Clients.Group(lobby.LobbyGuid).SendAsync("OutAllLobbyUser");
-                    }
+
+
                 }
-
-
             }
 
             await base.OnDisconnectedAsync(exception);
@@ -119,6 +167,35 @@ namespace Esfamilo_Web.Hubs
             var targetletter = RandomLetter.GetRandomLetter(getusedtargetletter);
             var GotoGameUrl = $"/Game/{lobbyuid.ToString()}/{targetletter}";
             await Clients.Group(lobbyuid.ToString()).SendAsync("GotoGameAllUserLobby", GotoGameUrl);
+        }
+        public async Task ExitLobbyCustom()
+        {
+            var lobbyuid = Context.GetHttpContext().Request.Query["LobbyUID"];
+            var lobbyIsGameStatus = lobbyService.GetLobbyWithUID(lobbyuid).Result.InGameStatus;
+            if (lobbyIsGameStatus == false)
+            {
+                ApplicationUser cuser = await _userManager.GetUserAsync(Context.User) as ApplicationUser;
+                var getUserInLobby = await userInLobby.GetUserInLobbyByUserId(cuser.Id);
+                if (getUserInLobby != null)
+                {
+                    var lobby = await lobbyService.Get(getUserInLobby.LobbyId);
+                    if (getUserInLobby.IsUserOwner == false)
+                    {
+                        await userInLobby.Delete(getUserInLobby.Id);
+                        await Clients.Caller.SendAsync("OutAllLobbyUser");
+                        await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyuid.ToString());
+                    }
+                    else
+                    {
+                        await lobbyService.Delete(getUserInLobby.LobbyId);
+                        await Clients.Group(lobby.LobbyGuid).SendAsync("OutAllLobbyUser");
+                        await Clients.Caller.SendAsync("OutAllLobbyUser");
+                        await Groups.RemoveFromGroupAsync(Context.ConnectionId, lobbyuid.ToString());
+                    }
+                }
+
+
+            }
         }
         public async Task<ApplicationUser> GetUserById(string userid)
         {

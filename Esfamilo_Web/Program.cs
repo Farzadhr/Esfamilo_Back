@@ -1,3 +1,4 @@
+using Esfamilo_Core.Ml;
 using Esfamilo_Data.Context;
 using Esfamilo_IOC;
 using Esfamilo_Web.Data;
@@ -30,6 +31,8 @@ namespace Esfamilo_Web
                 options.Password.RequireUppercase = false;
             });
             builder.Services.AddDependencyInjection();
+            builder.Services.AddPredictionWordEnginePool();
+            builder.Services.AddSingleton<WordPredictML>();
             builder.Services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             builder.Services.AddRazorPages();
             builder.Services.AddSignalR();

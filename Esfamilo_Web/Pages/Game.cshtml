@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="menuNav">
-                    <a asp-page="Index" class="menuBtn" style="color:var(--blue)"><i class="fa-solid fa-close"></i></a>
+                    <button id="ExitLobbyBtn" class="menuBtn" style="color:var(--blue)"><i class="fa-solid fa-close"></i></button>
                 </div>
             </div>
         </div>
@@ -45,8 +45,8 @@
                     @for (int i = 0; i < Model.CategoryInLobbies.Count(); i++)
                     {
                         <li>
-                            <p>@Model.CategoryInLobbies[i].CategroyName.GetCategoryPersianName() :</p>
-                            <input type="text" class="WordInputOfCategory" data-index="@string.Format("{0}",i+1)" id="@Model.CategoryInLobbies[i].CategroyName">
+                            <p>@Model.CategoryInLobbies[i].CategroyName.GetCategoryPersianName().Result :</p>
+                            <input type="text" autocomplete="off" class="WordInputOfCategory" data-index="@string.Format("{0}",i+1)" id="@Model.CategoryInLobbies[i].CategroyName">
                         </li>
                     }
                 </ul>

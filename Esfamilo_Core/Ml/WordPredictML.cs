@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using Microsoft.Extensions.ML;
 
 namespace Esfamilo_Core.Ml
 {
@@ -54,28 +55,25 @@ namespace Esfamilo_Core.Ml
 
         private static string MLNetModelPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Ml/MLModel1.zip");
 
-        public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
-
-        /// <summary>
-        /// Use this method to predict on <see cref="ModelInput"/>.
-        /// </summary>
-        /// <param name="input">model input.</param>
-        /// <returns><seealso cref=" ModelOutput"/></returns>
-        public static async Task<ModelOutput> Predict(ModelInput input)
+        //public static readonly Lazy<PredictionEngine<ModelInput, ModelOutput>> PredictEngine = new Lazy<PredictionEngine<ModelInput, ModelOutput>>(() => CreatePredictEngine(), true);
+        private readonly PredictionEnginePool<ModelInput, ModelOutput> _enginePool;
+        public WordPredictML(PredictionEnginePool<ModelInput, ModelOutput> enginePool)
         {
-            return await Task.Run(() =>
-            {
-                var predEngine = PredictEngine.Value;
-                return predEngine.Predict(input);
-            });
-
+            _enginePool = enginePool;
         }
 
-        private static PredictionEngine<ModelInput, ModelOutput> CreatePredictEngine()
+        public ModelOutput Predict(string input)
         {
-            var mlContext = new MLContext();
-            ITransformer mlModel = mlContext.Model.Load(MLNetModelPath, out var _);
-            return mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
+            //var predEngine = PredictEngine.Value;
+            //return predEngine.Predict(input);
+            return _enginePool.Predict(new ModelInput { Col0 = input });
         }
+
+        //private static PredictionEngine<ModelInput, ModelOutput> CreatePredictEngine()
+        //{
+        //    var mlContext = new MLContext();
+        //    ITransformer mlModel = mlContext.Model.Load(MLNetModelPath, out var _);
+        //    return mlContext.Model.CreatePredictionEngine<ModelInput, ModelOutput>(mlModel);
+        //}
     }
 }
