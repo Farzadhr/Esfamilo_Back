@@ -32,7 +32,7 @@ namespace Esfamilo_Web.Hubs
             this.httpContextAccessor = httpContextAccessor;
             _context = context;
             wordService = wordForCategoryService1;
-            _manageLobbyHubContext = manageLobbyHubContext; 
+            _manageLobbyHubContext = manageLobbyHubContext;
         }
 
 
@@ -56,41 +56,73 @@ namespace Esfamilo_Web.Hubs
                         LobbyId = Lobby.Id,
                     });
                 }
-                else
+                //else
+                //{
+                //    if(currentUsesUserInLobby.IsUserOwner == false)
+                //    {
+                //        await userInLobby.Delete(currentUsesUserInLobby.Id);
+                //        await userInLobby.Add(new UserInLobby
+                //        {
+                //            UserId = getUser.Id,
+                //            IsUserOwner = false,
+                //            UserScore = 0,
+                //            LobbyId = Lobby.Id,
+                //        });
+                //    }
+                //}
+                var GetUserInLobby = await userInLobby.GetUserInLobbybyLobbyID(Lobby.Id);
+                if (GetUserInLobby.Count == Lobby.LimitUserCount)
                 {
-                    if(currentUsesUserInLobby.IsUserOwner == false)
+                    var limitedLobby = Lobby;
+                    limitedLobby.IsLimitLobby = true;
+                    await lobbyService.Update(limitedLobby);
+
+                    var UpdateUnLimitedLobbiesList = await lobbyService.GetAllUnLimitesLobby();
+                    List<LobbyForList> getlobbyforlist = new List<LobbyForList>();
+                    foreach (var lobb in UpdateUnLimitedLobbiesList)
                     {
-                        await userInLobby.Delete(currentUsesUserInLobby.Id);
-                        await userInLobby.Add(new UserInLobby
+                        var userlengthinlobby = await userInLobby.GetUserInLobbybyLobbyID(lobb.Id);
+                        getlobbyforlist.Add(new LobbyForList
                         {
-                            UserId = getUser.Id,
-                            IsUserOwner = false,
-                            UserScore = 0,
-                            LobbyId = Lobby.Id,
+                            LobbyGuid = lobb.LobbyGuid,
+                            LobbyName = lobb.LobbyName,
+                            CountUserInLobby = userlengthinlobby.Count.ToString(),
+                            LimitUserCount = lobb.LimitUserCount
                         });
                     }
-                }
-                var GetUserInLobby = await userInLobby.GetUserInLobbybyLobbyID(Lobby.Id);
-                if (GetUserInLobby.Count >= Lobby.LimitUserCount)
-                {
 
+                    await _manageLobbyHubContext.Clients.All.SendAsync("ConnectedUserGetLobbies", JsonConvert.SerializeObject(getlobbyforlist));
+                }
+                if (GetUserInLobby.Count > Lobby.LimitUserCount)
+                {
+                    if (currentUsesUserInLobby != null)
+                    {
+                        await userInLobby.Delete(currentUsesUserInLobby.Id);
+                    }
+                    await Clients.Caller.SendAsync("GetOutUnLimitedUser");
                 }
             }
             else
             {
-                if(userInLobby.GetUserInLobbyByUserId(getUser.Id).Result.IsUserOwner == true)
+                var GetUserInLobby = await userInLobby.GetUserInLobbybyLobbyID(Lobby.Id);
+                if (userInLobby.GetUserInLobbyByUserId(getUser.Id).Result.IsUserOwner == true)
                 {
-                    Lobby.InGameStatus = false;
-                    if(Lobby.CurrentRound+1 <= Lobby.RoundCount)
+                    if (Lobby.CurrentRound + 1 <= Lobby.RoundCount)
                     {
                         Lobby.CurrentRound += 1;
                         await lobbyService.Update(Lobby);
+                        string updatedCurrentRound = $"{Lobby.RoundCount}/{Lobby.CurrentRound}";
+                        await Clients.Group(lobbyuid.ToString()).SendAsync("updateCurrentRound" , updatedCurrentRound);
                     }
                     else
                     {
-                        await lobbyService.Update(Lobby);
                         await Clients.Group(lobbyuid.ToString()).SendAsync("LobbyStopGame");
                     }
+                }
+                if (GetUserInLobby.Count == Lobby.LimitUserCount)
+                {
+                    Lobby.InGameStatus = false;
+                    await lobbyService.Update(Lobby);
                 }
             }
             var UsersinLobby = await userInLobby.GetUserInLobbybyLobbyID(Lobby.Id);
@@ -112,7 +144,7 @@ namespace Esfamilo_Web.Hubs
         {
             var lobbyuid = Context.GetHttpContext().Request.Query["LobbyUID"];
             var Lobby = await lobbyService.GetLobbyWithUID(lobbyuid);
-            if(Lobby != null)
+            if (Lobby != null)
             {
                 var lobbyIsGameStatus = Lobby.InGameStatus;
                 if (lobbyIsGameStatus == false)

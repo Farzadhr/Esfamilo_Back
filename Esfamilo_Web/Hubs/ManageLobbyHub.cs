@@ -25,7 +25,7 @@ namespace Esfamilo_Web.Hubs
         }
         public async override Task OnConnectedAsync()
         {
-            var lobbies = await lobbyService.GetAll();
+            var lobbies = await lobbyService.GetAllUnLimitesLobby();
             List<LobbyForList> getlobbyforlist = new List<LobbyForList>();
             foreach(var lobb in lobbies)
             {
@@ -52,6 +52,8 @@ namespace Esfamilo_Web.Hubs
                 RoundCount = AddLobby.RoundCount,
                 CurrentRound = 1,
                 LimitUserCount = AddLobby.LimitUserCount,
+                IsLimitLobby = false,
+                InGameStatus =false,
             });
 
 

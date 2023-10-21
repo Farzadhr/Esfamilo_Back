@@ -111,7 +111,7 @@ namespace Esfamilo_Web.Hubs
             }
             else
             {
-                await Task.Delay(8000);
+                await Task.Delay(3000);
             }
             var lobbyurl = $"/Lobby/{LobbyUID}";
             await Clients.Caller.SendAsync("SendUserToLobby", lobbyurl);

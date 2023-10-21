@@ -11,7 +11,7 @@ namespace Esfamilo_Core.Interfaces
     public interface IWordForCategoryService : IGenericService<WordForCategory>
     {
         Task<string> GetUsedTargetLetter(int lobbyid);
-        Task<List<WordForCategory>> GetAllWordsFromLobby(int lobbyid);
+        Task<List<WordForCategory>> GetAllWordsFromLobby(int lobbyid,int CurrentRound);
         Task<List<WordForCategory>> GetAllWordsFromUserId(string UserId);
     }
 }

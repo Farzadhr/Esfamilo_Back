@@ -49,6 +49,12 @@ connection.on("LobbyStopGame", function () {
     startbtn.setAttribute("disabled", "true");
     startbtn.style.backgroundColor = "#3a3b61"
 })
+connection.on("GetOutUnLimitedUser", function () {
+    window.location.href = "/"
+})
+connection.on("updateCurrentRound", function (e) {
+    document.getElementById("btnstartgameinlobby").innerHTML = `شروع دور ${e}`
+})
 connection.start();
 
 var ulmessages = document.getElementById("sendMessageForm")

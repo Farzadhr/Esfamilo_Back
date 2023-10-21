@@ -132,11 +132,11 @@
                 <form id="CreateLobbyForm">
                     <input type="text" id="LobbyNameForm" class="lobbyName" placeholder="نام لابی را وارد کنید">
                     <div class="lobbyDetail">
-                        <div class="privateLobby">
+@*                        <div class="privateLobby">
                             <input type="checkbox" id="CheckPrivateLobby" style="display:none" />
                             <div class="divCheck" id="BtnCheckPrivateLobby"><i class="fa-solid fa-check"></i></div>
                             <p>لابی اختصاصی</p>
-                        </div>
+                        </div>*@
                         <div class="roundCount">
                             <input type="number" id="roundCountLobby" min="1" max="8" value="1">
                             <label for="">تعداد دور</label>
@@ -442,16 +442,16 @@
     <script src="~/js/ManageLobby.js"></script>
 
     <script>
-        $("#BtnCheckPrivateLobby").click(function (e) {
-            e.preventDefault();
-            if ($("#BtnCheckPrivateLobby").hasClass("divChecked")) {
-                $("#CheckPrivateLobby").attr("checked", false);
-                $("#BtnCheckPrivateLobby").removeClass("divChecked");
-            } else {
-                $("#CheckPrivateLobby").attr("checked", true);
-                $("#BtnCheckPrivateLobby").addClass("divChecked");
-            }
-        });
+        //$("#BtnCheckPrivateLobby").click(function (e) {
+        //    e.preventDefault();
+        //    if ($("#BtnCheckPrivateLobby").hasClass("divChecked")) {
+        //        $("#CheckPrivateLobby").attr("checked", false);
+        //        $("#BtnCheckPrivateLobby").removeClass("divChecked");
+        //    } else {
+        //        $("#CheckPrivateLobby").attr("checked", true);
+        //        $("#BtnCheckPrivateLobby").addClass("divChecked");
+        //    }
+        //});
         checkcategoryischeckofnot();
         $(".categoryBtn").click(function (e) {
             var isselected = $(this).hasClass("categoryChecked");
@@ -468,7 +468,7 @@
             var categoryChecked = document.getElementsByClassName("categoryChecked");
             var categorycheckedString = ""
             var LobbyName = $("#LobbyNameForm").val();
-            var isPrivateLobby = ($("#CheckPrivateLobby").attr("checked") == "checked") ? true : false
+            //var isPrivateLobby = ($("#CheckPrivateLobby").attr("checked") == "checked") ? true : false
             var roundCount = $("#roundCountLobby").val();
             var limitusercount = $("#limitUserLobbyCount").val();
             for (var i of categoryChecked) {
@@ -477,7 +477,7 @@
             categorycheckedString = categorycheckedString.slice(0, categorycheckedString.length - 1)
             var data = {
                 LobbyName: LobbyName,
-                IsPrivateLobby: isPrivateLobby,
+                IsPrivateLobby: false,
                 RoundCount: roundCount,
                 CategorySelected: categorycheckedString,
                 LimitUserCount: limitusercount

@@ -1,6 +1,7 @@
 ﻿using Esfamilo_Core.Interfaces;
 using Esfamilo_Domain.Interfaces;
 using Esfamilo_Domain.Models;
+using Microsoft.ML.Transforms.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,10 +60,10 @@ namespace Esfamilo_Core.Services
             return Entities;
         }
 
-        public async Task<List<WordForCategory>> GetAllWordsFromLobby(int lobbyid)
+        public async Task<List<WordForCategory>> GetAllWordsFromLobby(int lobbyid, int CurrentRound)
         {
             var Entities = await _repository.GetAll();
-            var WordsinLobby = Entities.Where(x=>x.LobbyId== lobbyid).ToList();
+            var WordsinLobby = Entities.Where(x=>x.LobbyId== lobbyid && x.LobbyRound == CurrentRound).ToList();
             return WordsinLobby;
         }
 
